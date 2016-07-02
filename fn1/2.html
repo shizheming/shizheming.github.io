@@ -26,12 +26,84 @@
 <div id="md" style="display: none;">
 <!-- markdown -->
 <p>应用函数的概念就是，这个函数只是一个壳，当其他函数作为参数传入的时候形成不同的功能，而并非把功能写死了，一个函数就是一个功能，这种形式的应用只是高阶函数的一部分。</p>
+<p>一个简单的，接受一定数量的参数并链接他们的函数并不是applicative：<p/>
+<pre>
+function cat(){
+	var head = _.first(arguments);
+	if (existy(head)) return head.concat.apply(head, _.rest(arguments)); else return [];
+}
+
+cat([1, 2, 3,], [4, 5], [6, 7, 8]);
+
+// [1, 2, 3, 4, 5, 6, 7, 8]
+</pre>
+<p>虽然相当有用，但cat不指望得到任何函数作为参数。同样，函数construct接受一个元素和一个数组，并用cat将元素放置在数组前方：</p>
+<pre>
+function construct(head, tail){
+	return cat([head], _.toArray(tail));
+}
+
+construct(42, [1, 2, 3]);
+
+// [42, 1, 2, 3]
+</pre>
+<p>虽然construct在函数中用到cat，但他并没有将cat作为参数传入，所以他不符合applicative的要求。</p>
+<p>然而，定义如下的一个mapcat函数是applicative：</p>
+<pre>
+function mapcat(fun, coll){
+	return cat.apply(null,_.map(coll, fun));
+}
+
+mapcat(function(e){
+	return construct(e,[' ']);
+},[1, 2, 3]);
+
+// [1, ',', 2, ',', 3, ',']
+</pre>
 <p>创建类似sql对表的处理的函数功能</p>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
 <p>应用函数的概念就是，这个函数只是一个壳，当其他函数作为参数传入的时候形成不同的功能，而并非把功能写死了，一个函数就是一个功能，这种形式的应用只是高阶函数的一部分。</p>
+
+<p>一个简单的，接受一定数量的参数并链接他们的函数并不是applicative：</p><p></p>
+
+<pre>function cat(){
+    var head = _.first(arguments);
+    if (existy(head)) return head.concat.apply(head, _.rest(arguments)); else return [];
+}
+
+cat([1, 2, 3,], [4, 5], [6, 7, 8]);
+
+// [1, 2, 3, 4, 5, 6, 7, 8]
+</pre>
+
+<p>虽然相当有用，但cat不指望得到任何函数作为参数。同样，函数construct接受一个元素和一个数组，并用cat将元素放置在数组前方：</p>
+
+<pre>function construct(head, tail){
+    return cat([head], _.toArray(tail));
+}
+
+construct(42, [1, 2, 3]);
+
+// [42, 1, 2, 3]
+</pre>
+
+<p>虽然construct在函数中用到cat，但他并没有将cat作为参数传入，所以他不符合applicative的要求。</p>
+
+<p>然而，定义如下的一个mapcat函数是applicative：</p>
+
+<pre>function mapcat(fun, coll){
+    return cat.apply(null,_.map(coll, fun));
+}
+
+mapcat(function(e){
+    return construct(e,[' ']);
+},[1, 2, 3]);
+
+// [1, ',', 2, ',', 3, ',']
+</pre>
 
 <p>创建类似sql对表的处理的函数功能</p>
 <!-- content end -->
