@@ -25,63 +25,12 @@
 	</div>
 <div id="md" style="display: none;">
 <!-- markdown -->
-<p>函数式编程通过使用函数来将值转换成抽象单元，接着用于构建软件系统。</p>
-<p>与面向对象方法将问题分解成多组“名词”或对象不同，函数式方法将相同的问题分解成多组“动词”或函数。与面向对象编程类似的是，函数式编程也通过“黏合”或“组合”其他函数的方式来构建更大的函数，以实现更加抽象的行为。</p>
-<p>函数式程序类似于一个用来转换数据的机器</p>
-<p>对于错误和警告的报告，我们可以写出如下代码：</p>
-<pre>
-function parseAge(age){
-	if (!_.isString(age)) throw new Error('Expecting a string');
-	var a;
-	console.log('Attempting to parse an age');
-
-	a = parseInt(age, 10);
-	if (_.isNaN(a)) {
-		console.log(['Could not parse age:', age].join(' '));
-		a = 0;
-	}
-
-	return a;
-}
-</pre>
-<p>但如果我们想修改输出错误，信息和警告呈现的方式，那么就要修改相应的代码行，以及其他地方的类似输出模式，一个较好的方法是将错误，信息和警告的概念抽象成不同的函数：</p>
-<pre>
-function fail(thing){
-	throw new Error(thing);
-}
-
-function warn(thing){
-	console.log([;'WARNING:', thing].join(' '));
-}
-
-function note(thing){
-	console.log(['NOTE:', thing].join(' '));
-}
-</pre>
-<p>有了这些函数，我们就可以将parseAge函数改写成：</p>
-<pre>
-function parseAge(age){
-	if (!_.isString(age)) fail('Expecting a string');
-	var a;
-
-	note('Attempting to parse an age');
-	a = parseInt(age, 10);
-
-	if (_.isNaN(a)) {
-		warn(['Could not parse age', age].join(' '));
-		a = 0;
-	}
-
-	return a;
-}
-</pre>
-<p>新的行为与旧的行为差别不大，不同的是现在报告错误，信息和警告的想法已经被抽象化了，可以随时随地去修改错误，信息和警告的报告函数，而不用去关心parseAge函数，这就是以函数为抽象单元。</p>
-<p>我发现以处理集合为中心的函数式方式更适合处理与人有关的数据，而面向对象的方法最适合模拟人</p>
+<p>应用函数的概念就是，这个函数只是一个壳，当其他函数作为参数传入的时候形成不同的功能，而并非把功能写死了，一个函数就是一个功能，这种形式的应用只是高阶函数的一部分。</p>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
-
+<p>应用函数的概念就是，这个函数只是一个壳，当其他函数作为参数传入的时候形成不同的功能，而并非把功能写死了，一个函数就是一个功能，这种形式的应用只是高阶函数的一部分。</p>
 <!-- content end -->
 </div>
 <br>
