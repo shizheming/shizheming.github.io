@@ -27,7 +27,20 @@
 <!-- markdown -->
 <p>函数式编程通过使用函数来将值转换成抽象单元，接着用于构建软件系统。</p>
 <p>与面向对象方法将问题分解成多组“名词”或对象不同，函数式方法将相同的问题分解成多组“动词”或函数。与面向对象编程类似的是，函数式编程也通过“黏合”或“组合”其他函数的方式来构建更大的函数，以实现更加抽象的行为。</p>
-
+<p>函数式程序类似于一个用来转换数据的机器</p>
+<pre>
+function parseAge(age){
+	if (_.isString(age)) throw new Error('Expecting a string');
+	var a;
+	console.log('Attempting to parse an age');
+	a = parseInt(age, 10);
+	if (_.isNaN(a)) {
+		console.log(['Could not parse age:', age].join(' '));
+		a = 0;
+	}
+	return a;
+}
+</pre>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -35,6 +48,21 @@
 <p>函数式编程通过使用函数来将值转换成抽象单元，接着用于构建软件系统。</p>
 
 <p>与面向对象方法将问题分解成多组“名词”或对象不同，函数式方法将相同的问题分解成多组“动词”或函数。与面向对象编程类似的是，函数式编程也通过“黏合”或“组合”其他函数的方式来构建更大的函数，以实现更加抽象的行为。</p>
+
+<p>函数式程序类似于一个用来转换数据的机器</p>
+
+<pre>function parseAge(age){
+    if (_.isString(age)) throw new Error('Expecting a string');
+    var a;
+    console.log('Attempting to parse an age');
+    a = parseInt(age, 10);
+    if (_.isNaN(a)) {
+        console.log(['Could not parse age:', age].join(' '));
+        a = 0;
+    }
+    return a;
+}
+</pre>
 <!-- content end -->
 </div>
 <br>
