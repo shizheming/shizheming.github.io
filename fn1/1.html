@@ -43,6 +43,10 @@ function parseAge(age){
 
 	return a;
 }
+
+parseAge('42');
+// (console) Attempting to parse an age
+// 42
 </pre>
 <p>但如果我们想修改输出错误，信息和警告呈现的方式，那么就要修改相应的代码行，以及其他地方的类似输出模式，一个较好的方法是将错误，信息和警告的概念抽象成不同的函数：</p>
 <pre>
@@ -74,6 +78,11 @@ function parseAge(age){
 
 	return a;
 }
+
+parseAge('frob');
+// (console) NOTE: Attrmpting to parse an age
+// (console) WARNING: Could not parse age: frob
+// 0
 </pre>
 <p>新的行为与旧的行为差别不大，不同的是现在报告错误，信息和警告的想法已经被抽象化了，可以随时随地去修改错误，信息和警告的报告函数，而不用去关心parseAge函数，这就是以函数为抽象单元。</p>
 <p></p>
@@ -102,6 +111,10 @@ function parseAge(age){
 
     return a;
 }
+
+parseAge('42');
+// (console) Attempting to parse an age
+// 42
 </pre>
 
 <p>但如果我们想修改输出错误，信息和警告呈现的方式，那么就要修改相应的代码行，以及其他地方的类似输出模式，一个较好的方法是将错误，信息和警告的概念抽象成不同的函数：</p>
@@ -135,6 +148,11 @@ function note(thing){
 
     return a;
 }
+
+parseAge('frob');
+// (console) NOTE: Attrmpting to parse an age
+// (console) WARNING: Could not parse age: frob
+// 0
 </pre>
 
 <p>新的行为与旧的行为差别不大，不同的是现在报告错误，信息和警告的想法已经被抽象化了，可以随时随地去修改错误，信息和警告的报告函数，而不用去关心parseAge函数，这就是以函数为抽象单元。</p>
