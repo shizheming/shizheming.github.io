@@ -99,7 +99,42 @@ averageSq(10);
 // 55
 </pre>
 <p>捕获其他函数的高阶函数是构建抽象的强大技术。</p>
+<p>如果你回想一下Applicative编程的例子，complement函数接受一个谓词，并返回一个反转谓词的函数。当时没有点明，其实complement已经将闭包用到了极致。</p>
+<p>谓词函数PRED被返回的函数捕获，我们创建一个判断偶数的谓词函数，然后我们可以用complement来定义判断奇数的函数isOdd。</p>
+<pre>
+function complement(PRED) {
+	return function() {
+		return !PRED.apply(null, _.toArray(arguments));
+	};
+}
 
+function isEven(n) {
+	return (n % 2) === 0;
+}
+
+var isOdd = complement(isEven);
+
+isOdd(2);
+// false
+
+isOdd(413);
+// true
+</pre>
+<p>但如果isEven之后发生变化呢？是否会改变isOdd的行为呢？正如你所看到的，变量的捕获发生在创建闭包的时候（这个例子里的PRED）。因为我通过一个新的变量创建了新的isEven引用，所以这种变化不会被isOdd察觉的。</p>
+<pre>
+function isEven(n) {
+	return false;
+}
+
+isEven(13);
+// false
+
+isOdd(13);
+// true
+
+isOdd(12);
+// false
+</pre>
 
 
 
@@ -191,6 +226,45 @@ averageSq(10);
 </pre>
 
 <p>捕获其他函数的高阶函数是构建抽象的强大技术。</p>
+
+<p>如果你回想一下Applicative编程的例子，complement函数接受一个谓词，并返回一个反转谓词的函数。当时没有点明，其实complement已经将闭包用到了极致。</p>
+
+<p>谓词函数PRED被返回的函数捕获，我们创建一个判断偶数的谓词函数，然后我们可以用complement来定义判断奇数的函数isOdd。</p>
+
+<pre>function complement(PRED) {
+    return function() {
+        return !PRED.apply(null, _.toArray(arguments));
+    };
+}
+
+function isEven(n) {
+    return (n % 2) === 0;
+}
+
+var isOdd = complement(isEven);
+
+isOdd(2);
+// false
+
+isOdd(413);
+// true
+</pre>
+
+<p>但如果isEven之后发生变化呢？是否会改变isOdd的行为呢？正如你所看到的，变量的捕获发生在创建闭包的时候（这个例子里的PRED）。因为我通过一个新的变量创建了新的isEven引用，所以这种变化不会被isOdd察觉的。</p>
+
+<pre>function isEven(n) {
+    return false;
+}
+
+isEven(13);
+// false
+
+isOdd(13);
+// true
+
+isOdd(12);
+// false
+</pre>
 <!-- content end -->
 </div>
 <br>
