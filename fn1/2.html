@@ -28,6 +28,10 @@
 <p>应用函数的概念就是，这个函数只是一个壳，当其他函数作为参数传入的时候形成不同的功能，而并非把功能写死了，一个函数就是一个功能，这种形式的应用只是高阶函数的一部分。</p>
 <p>一个简单的，接受一定数量的参数并链接他们的函数并不是applicative：<p/>
 <pre>
+function existy(x) {
+	return x != null;
+}
+
 function cat() {
 	var head = _.first(arguments);
 	if (existy(head)) return head.concat.apply(head, _.rest(arguments)); else return [];
@@ -69,7 +73,11 @@ mapcat(function(e) {
 
 <p>一个简单的，接受一定数量的参数并链接他们的函数并不是applicative：</p><p></p>
 
-<pre>function cat() {
+<pre>function existy(x) {
+    return x != null;
+}
+
+function cat() {
     var head = _.first(arguments);
     if (existy(head)) return head.concat.apply(head, _.rest(arguments)); else return [];
 }
