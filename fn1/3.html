@@ -78,7 +78,27 @@ scale10([1, 2, 3]);
 // [10, 20, 30]
 </pre>
 <p>捕捉到的值可以是任何类型，包括函数。下面这个函数averageDamp，捕获一个函数，并返回一个计算该函数结果与另一个值得平均值函数。</p>
+<pre>
+function average(array) {
+	var sum = _.reduce(array, function(a, b) {
+		return a + b;
+	});
+	return sum / _.size(array);
+}
 
+function averageDamp(FUN) {
+	return function(n) {
+		return average([n, FUN(n)]);
+	};
+}
+
+var averageSq = averageDamp(function(n) {
+	return n * n;
+});
+averageSq(10);
+// 55
+</pre>
+<p>捕获其他函数的高阶函数是构建抽象的强大技术。</p>
 
 
 
@@ -149,6 +169,28 @@ scale10([1, 2, 3]);
 </pre>
 
 <p>捕捉到的值可以是任何类型，包括函数。下面这个函数averageDamp，捕获一个函数，并返回一个计算该函数结果与另一个值得平均值函数。</p>
+
+<pre>function average(array) {
+    var sum = _.reduce(array, function(a, b) {
+        return a + b;
+    });
+    return sum / _.size(array);
+}
+
+function averageDamp(FUN) {
+    return function(n) {
+        return average([n, FUN(n)]);
+    };
+}
+
+var averageSq = averageDamp(function(n) {
+    return n * n;
+});
+averageSq(10);
+// 55
+</pre>
+
+<p>捕获其他函数的高阶函数是构建抽象的强大技术。</p>
 <!-- content end -->
 </div>
 <br>
