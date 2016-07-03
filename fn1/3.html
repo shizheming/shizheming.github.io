@@ -25,23 +25,54 @@
 	</div>
 <div id="md" style="display: none;">
 <!-- markdown -->
-<p>
-全局作用域拥有最长的生命周期，跨越整个程序，网页不关闭一直都会存在。
-</p>
-<p>
-词法作用域是指一个变量的可见性。
-</p>
+<p>全局作用域拥有最长的生命周期，跨越整个程序，网页不关闭一直都会存在。</p>
+<p>词法作用域是指一个变量的可见性。</p>
+<pre>
+aVariable = 'Outer';
+
+function afun(){
+	var aVariable = 'Middle';
+
+	return _.map([1, 2, 3], function(e){
+		var aVariable = 'In';
+
+		return [aVariable, e].join(' ');
+	});
+}
+
+afun();
+// ['In 1', 'In 2', 'In 3']
+</pre>
+<p>简单的情况下，变量的查找开始于最接近的绑定上下文而向外扩张，直到找到第一个绑定。</p>
+<p>动态作用域（this，with）有待探讨</p>
+
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
-<p>
-全局作用域拥有最长的生命周期，跨越整个程序，网页不关闭一直都会存在。
-</p>
+<p>全局作用域拥有最长的生命周期，跨越整个程序，网页不关闭一直都会存在。</p>
 
-<p>
-词法作用域是指一个变量的可见性。
-</p>
+<p>词法作用域是指一个变量的可见性。</p>
+
+<pre>aVariable = 'Outer';
+
+function afun(){
+    var aVariable = 'Middle';
+
+    return _.map([1, 2, 3], function(e){
+        var aVariable = 'In';
+
+        return [aVariable, e].join(' ');
+    });
+}
+
+afun();
+// ['In 1', 'In 2', 'In 3']
+</pre>
+
+<p>简单的情况下，变量的查找开始于最接近的绑定上下文而向外扩张，直到找到第一个绑定。</p>
+
+<p>动态作用域（this，with）有待探讨</p>
 <!-- content end -->
 </div>
 <br>
