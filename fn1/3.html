@@ -30,10 +30,10 @@
 <pre>
 aVariable = 'Outer';
 
-function afun(){
+function afun() {
 	var aVariable = 'Middle';
 
-	return _.map([1, 2, 3], function(e){
+	return _.map([1, 2, 3], function(e) {
 		var aVariable = 'In';
 
 		return [aVariable, e].join(' ');
@@ -45,6 +45,44 @@ afun();
 </pre>
 <p>简单的情况下，变量的查找开始于最接近的绑定上下文而向外扩张，直到找到第一个绑定。</p>
 <p>动态作用域（this，with）有待探讨</p>
+<p>闭包是一个函数，该函数在生成时会“捕获”作用域内的外部绑定。</p>
+<p>闭包的最简单的例子是一等函数，捕获局部变量供以后使用：</p>
+<pre>
+function whatWasTheLocal() {
+	var CAPTURED = 'Oh hai';
+
+	return function() {
+		return 'The local was: ' + CAPTURED;
+	};
+}
+
+var reportLocal = whatWasTheLocal();
+
+reportLocal();
+// 'The local was: Oh hai'
+</pre>
+<p>我已经谈到了函数的局部变量的生命周期只限于在函数体内，但是当一个闭包捕获这个变量，它一定程度上还是能继续存在。</p>
+<p>如此看来，局部变量CAPTURED好像能够通过whatWasTheLocal返回的闭包被得到，实际上就是这么回事。但局部变量并不是唯一可以捕获的东西。函数参数也是可以被捕获的：</p>
+<pre>
+function createScaleFunction(FACTOR) {
+	return function(v){
+		return _.map(v, function(n)) {
+			return (n * FACTOR);
+		}
+	};
+}
+
+var scale10 = createScaleFunction(10);
+
+scale10([1, 2, 3]);
+// [10, 20, 30]
+</pre>
+
+
+
+
+
+
 
 <!-- markdown end -->
 </div>
@@ -56,10 +94,10 @@ afun();
 
 <pre>aVariable = 'Outer';
 
-function afun(){
+function afun() {
     var aVariable = 'Middle';
 
-    return _.map([1, 2, 3], function(e){
+    return _.map([1, 2, 3], function(e) {
         var aVariable = 'In';
 
         return [aVariable, e].join(' ');
@@ -73,6 +111,42 @@ afun();
 <p>简单的情况下，变量的查找开始于最接近的绑定上下文而向外扩张，直到找到第一个绑定。</p>
 
 <p>动态作用域（this，with）有待探讨</p>
+
+<p>闭包是一个函数，该函数在生成时会“捕获”作用域内的外部绑定。</p>
+
+<p>闭包的最简单的例子是一等函数，捕获局部变量供以后使用：</p>
+
+<pre>function whatWasTheLocal() {
+    var CAPTURED = 'Oh hai';
+
+    return function() {
+        return 'The local was: ' + CAPTURED;
+    };
+}
+
+var reportLocal = whatWasTheLocal();
+
+reportLocal();
+// 'The local was: Oh hai'
+</pre>
+
+<p>我已经谈到了函数的局部变量的生命周期只限于在函数体内，但是当一个闭包捕获这个变量，它一定程度上还是能继续存在。</p>
+
+<p>如此看来，局部变量CAPTURED好像能够通过whatWasTheLocal返回的闭包被得到，实际上就是这么回事。但局部变量并不是唯一可以捕获的东西。函数参数也是可以被捕获的：</p>
+
+<pre>function createScaleFunction(FACTOR) {
+    return function(v){
+        return _.map(v, function(n)) {
+            return (n * FACTOR);
+        }
+    };
+}
+
+var scale10 = createScaleFunction(10);
+
+scale10([1, 2, 3]);
+// [10, 20, 30]
+</pre>
 <!-- content end -->
 </div>
 <br>
