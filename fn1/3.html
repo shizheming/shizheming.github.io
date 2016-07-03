@@ -135,9 +135,61 @@ isOdd(13);
 isOdd(12);
 // false
 </pre>
+<p>让我们运行下列代码：好像都对，不是吗？不完全是：</p>
+<pre>
+function showObject(OBJ) {
+	return function() {
+		return OBJ;
+	};
+}
 
+var o = {
+	a : 42
+};
+var show0 = showObject(o);
 
+show0();
+/*{
+	a : 42
+}*/
 
+o.newField = 108;
+show0();
+/*{
+	a : 42,
+	newField : 108
+}*/
+</pre>
+<p>由于o的引用同时在于闭包内部和外部，他的变化可以跨越看似私有的界限。这很容易导致混乱，所以通常的使用情况是最大限度地减少暴露捕获变量的风险。javascript经常使用下面这种模式，把捕获的变量作为私有数据：</p>
+<pre>
+var pingpong = (function() {
+	var PRIVATE = 0;
+
+	return {
+		inc : function(n) {
+			return PRIVATE += n;
+		},
+		dec : function(n) {
+			return PRIVATE -= n;
+		}
+	};
+})();
+
+pingpong.inc(10);
+// 10
+
+pingpong(7);
+// 3
+
+pingpong.div = function(n) {
+	return PRIVATE / n;
+};
+
+pingpong.div(3);
+// ReferenceError: PRIVATE is not defined
+</pre>
+<p>对象pingpong是由块作用域的匿函数构建，并包含两个闭包inc和dec。最有趣的部分是，捕获的变量PRIVATE是两个闭包的私有变量，除了通过调用这两个函数之一，无法通过任何手段进行访问，所以当我们添加了div的方法去访问这个变量的时候也是安全的。</p>
+<p>通过这种闭包模式提供访问保护是一种强大的技术。</p>
 
 <!-- markdown end -->
 </div>
@@ -265,6 +317,65 @@ isOdd(13);
 isOdd(12);
 // false
 </pre>
+
+<p>让我们运行下列代码：好像都对，不是吗？不完全是：</p>
+
+<pre>function showObject(OBJ) {
+    return function() {
+        return OBJ;
+    };
+}
+
+var o = {
+    a : 42
+};
+var show0 = showObject(o);
+
+show0();
+/*{
+    a : 42
+}*/
+
+o.newField = 108;
+show0();
+/*{
+    a : 42,
+    newField : 108
+}*/
+</pre>
+
+<p>由于o的引用同时在于闭包内部和外部，他的变化可以跨越看似私有的界限。这很容易导致混乱，所以通常的使用情况是最大限度地减少暴露捕获变量的风险。javascript经常使用下面这种模式，把捕获的变量作为私有数据：</p>
+
+<pre>var pingpong = (function() {
+    var PRIVATE = 0;
+
+    return {
+        inc : function(n) {
+            return PRIVATE += n;
+        },
+        dec : function(n) {
+            return PRIVATE -= n;
+        }
+    };
+})();
+
+pingpong.inc(10);
+// 10
+
+pingpong(7);
+// 3
+
+pingpong.div = function(n) {
+    return PRIVATE / n;
+};
+
+pingpong.div(3);
+// ReferenceError: PRIVATE is not defined
+</pre>
+
+<p>对象pingpong是由块作用域的匿函数构建，并包含两个闭包inc和dec。最有趣的部分是，捕获的变量PRIVATE是两个闭包的私有变量，除了通过调用这两个函数之一，无法通过任何手段进行访问，所以当我们添加了div的方法去访问这个变量的时候也是安全的。</p>
+
+<p>通过这种闭包模式提供访问保护是一种强大的技术。</p>
 <!-- content end -->
 </div>
 <br>
