@@ -30,7 +30,7 @@
 <p>函数式程序类似于一个用来转换数据的机器</p>
 <p>对于错误和警告的报告，我们可以写出如下代码：</p>
 <pre>
-function parseAge(age){
+function parseAge(age) {
 	if (!_.isString(age)) throw new Error('Expecting a string');
 	var a;
 	console.log('Attempting to parse an age');
@@ -54,17 +54,17 @@ function fail(thing){
 	throw new Error(thing);
 }
 
-function warn(thing){
+function warn(thing) {
 	console.log([;'WARNING:', thing].join(' '));
 }
 
-function note(thing){
+function note(thing) {
 	console.log(['NOTE:', thing].join(' '));
 }
 </pre>
 <p>有了这些函数，我们就可以将parseAge函数改写成：</p>
 <pre>
-function parseAge(age){
+function parseAge(age) {
 	if (!_.isString(age)) fail('Expecting a string');
 	var a;
 
@@ -85,7 +85,6 @@ parseAge('frob');
 // 0
 </pre>
 <p>新的行为与旧的行为差别不大，不同的是现在报告错误，信息和警告的想法已经被抽象化了，可以随时随地去修改错误，信息和警告的报告函数，而不用去关心parseAge函数，这就是以函数为抽象单元。</p>
-<p></p>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -98,7 +97,7 @@ parseAge('frob');
 
 <p>对于错误和警告的报告，我们可以写出如下代码：</p>
 
-<pre>function parseAge(age){
+<pre>function parseAge(age) {
     if (!_.isString(age)) throw new Error('Expecting a string');
     var a;
     console.log('Attempting to parse an age');
@@ -123,18 +122,18 @@ parseAge('42');
     throw new Error(thing);
 }
 
-function warn(thing){
+function warn(thing) {
     console.log([;'WARNING:', thing].join(' '));
 }
 
-function note(thing){
+function note(thing) {
     console.log(['NOTE:', thing].join(' '));
 }
 </pre>
 
 <p>有了这些函数，我们就可以将parseAge函数改写成：</p>
 
-<pre>function parseAge(age){
+<pre>function parseAge(age) {
     if (!_.isString(age)) fail('Expecting a string');
     var a;
 
@@ -156,8 +155,6 @@ parseAge('frob');
 </pre>
 
 <p>新的行为与旧的行为差别不大，不同的是现在报告错误，信息和警告的想法已经被抽象化了，可以随时随地去修改错误，信息和警告的报告函数，而不用去关心parseAge函数，这就是以函数为抽象单元。</p>
-
-<p></p>
 <!-- content end -->
 </div>
 <br>
