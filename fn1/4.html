@@ -26,11 +26,122 @@
 <div id="md" style="display: none;">
 <!-- markdown -->
 <p>可以传递给其他函数的函数，可以从函数返回的函数，定义为高阶函数。</p>
+<p>首先，让我们从一个很简单的函数repeat开始。他以一个数字和一个值为参数，将该值进行多次复制，并放入一个数组当中：</p>
+<pre>
+function repeat(times, VALUE) {
+	return _.map(_.range(times), function() {
+		return VALUE;
+	});
+}
+
+repeat(4, 'Major');
+// ['Major', 'Major', 'Major', 'Major']
+</pre>
+<p>repeat的实现使用_.map函数来遍历从0到times-1的数组，并将VALUE丢到数组中。这里我主要用他来强调一个很重要的观点，可概括为“使用函数，而不是值”。</p>
+<p>也就是说，当一个函数将一个值重复多次是可以的，但将运算重复多次则更好。我略微地修改了一下repeat，按如下方式来执行：</p>
+<pre>
+function repeatedly(times, fun) {
+	return _.map(_.range(times), fun);
+}
+
+repeatedly(3, function() {
+	return Math.floor((Math.random() * 10) + 1);
+});
+// [1, 3, 8]
+
+repeatedly(3, function() {
+	return 'Odelay';
+})
+// ['Odelay', 'Odelay', 'Odelay']
+</pre>
+<p>函数repeatedly是展示函数式思维方式力量的一个很好的例证。通过将参数从值替换为函数，我们打开了一个充满可能性的世界，与repeat类似，在调用端，我们可以用一个可以填充任何东西的数组来替换一个固定的值。如果我们真的想在repeatedly中用常量，那么我们直接把常量用函数返回出去就行了，就像上面第二次调用的那样做。</p>
+<p>我已经将一个在repeat中使用静态值的函数变成了接收一个函数的repeatedly函数。虽然这确实使repeatedly更加开放，但他的通用性仍然没有达到预期。我们仍然需要一个确定需要调用给定的函数多少次的数值。但有时候也知道什么时候退出并不取决于“次数”，而是条件。换句话说，你可能需要不断调用一个函数，直到他的返回值超过了某个阈值，这样一来，一个简单的值是远远不够的，相反，我们定义另一个名为iterateUntil的函数，来解决这个问题：</p>
+<pre>
+function iterateUntil(fun, check, init) {
+	var ret = [];
+	var result = fun(init);
+
+	while (check(result)) {
+		ret.push(result);
+		result = fun(result);
+	}
+
+	return ret;
+}
+
+iterateUntil(function(n) {
+	return n + n;
+}, function(n) {
+	return n <= 1024;
+});
+// [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+</pre>
+<p>函数iterateUntil接收两个函数：一个用来执行一些动作，另外一个用来进行结果检查，当结果满足“结束”值时返回false。这算得上是真正将repeatedly带到了一个新的水平，现在甚至连重复次数都是开放的。这里假设你想找到所有大于2小于1024的2的倍数。</p>
+<p>iterateUntil提供的另外一个优点是，循环体是一个前馈函数。换句话说，一些函数的执行结果被当做下一个函数的参数。我将会在“管道”一节展示这种条件结束的强大。</p>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
 <p>可以传递给其他函数的函数，可以从函数返回的函数，定义为高阶函数。</p>
+
+<p>首先，让我们从一个很简单的函数repeat开始。他以一个数字和一个值为参数，将该值进行多次复制，并放入一个数组当中：</p>
+
+<pre>function repeat(times, VALUE) {
+    return _.map(_.range(times), function() {
+        return VALUE;
+    });
+}
+
+repeat(4, 'Major');
+// ['Major', 'Major', 'Major', 'Major']
+</pre>
+
+<p>repeat的实现使用_.map函数来遍历从0到times-1的数组，并将VALUE丢到数组中。这里我主要用他来强调一个很重要的观点，可概括为“使用函数，而不是值”。</p>
+
+<p>也就是说，当一个函数将一个值重复多次是可以的，但将运算重复多次则更好。我略微地修改了一下repeat，按如下方式来执行：</p>
+
+<pre>function repeatedly(times, fun) {
+    return _.map(_.range(times), fun);
+}
+
+repeatedly(3, function() {
+    return Math.floor((Math.random() * 10) + 1);
+});
+// [1, 3, 8]
+
+repeatedly(3, function() {
+    return 'Odelay';
+})
+// ['Odelay', 'Odelay', 'Odelay']
+</pre>
+
+<p>函数repeatedly是展示函数式思维方式力量的一个很好的例证。通过将参数从值替换为函数，我们打开了一个充满可能性的世界，与repeat类似，在调用端，我们可以用一个可以填充任何东西的数组来替换一个固定的值。如果我们真的想在repeatedly中用常量，那么我们直接把常量用函数返回出去就行了，就像上面第二次调用的那样做。</p>
+
+<p>我已经将一个在repeat中使用静态值的函数变成了接收一个函数的repeatedly函数。虽然这确实使repeatedly更加开放，但他的通用性仍然没有达到预期。我们仍然需要一个确定需要调用给定的函数多少次的数值。但有时候也知道什么时候退出并不取决于“次数”，而是条件。换句话说，你可能需要不断调用一个函数，直到他的返回值超过了某个阈值，这样一来，一个简单的值是远远不够的，相反，我们定义另一个名为iterateUntil的函数，来解决这个问题：</p>
+
+<pre>function iterateUntil(fun, check, init) {
+    var ret = [];
+    var result = fun(init);
+
+    while (check(result)) {
+        ret.push(result);
+        result = fun(result);
+    }
+
+    return ret;
+}
+
+iterateUntil(function(n) {
+    return n + n;
+}, function(n) {
+    return n &lt;= 1024;
+});
+// [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+</pre>
+
+<p>函数iterateUntil接收两个函数：一个用来执行一些动作，另外一个用来进行结果检查，当结果满足“结束”值时返回false。这算得上是真正将repeatedly带到了一个新的水平，现在甚至连重复次数都是开放的。这里假设你想找到所有大于2小于1024的2的倍数。</p>
+
+<p>iterateUntil提供的另外一个优点是，循环体是一个前馈函数。换句话说，一些函数的执行结果被当做下一个函数的参数。我将会在“管道”一节展示这种条件结束的强大。</p>
 <!-- content end -->
 </div>
 <br>
