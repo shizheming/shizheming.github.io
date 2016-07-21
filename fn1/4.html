@@ -88,7 +88,89 @@ function always(VALUE) {
     };
 }
 </pre>
-<p>一个为什么你可能需要创建一个以函数为返回值的函数的理由是，高阶函数的参数是用来“配置”返回函数的行为的</p>
+<p>一个为什么你可能需要创建一个以函数为返回值的函数的理由是，高阶函数的参数是用来“配置”返回函数的行为的，对于高阶函数makeAdder而言，他的参数配置了其返回函数每次添加数值的太小。</p>
+<pre>
+var add100 = makeAdder(100);
+add100(38);
+// 138
+</pre>
+<p>假设你需要一个能够生成唯一字符串的函数。实现可能如下所示：</p>
+<pre>
+function uniqueString(len) {
+    return Math.random().toString(36).substr(2, len);
+}
+
+uniqueString(10);
+// '3rm6ww5w0x'
+</pre>
+<p>然而，如果需要生成具有特定前缀的唯一字符串，改怎么办？可将uniqueString修改为：</p>
+<pre>
+function uniqueString(prefix) {
+    return [prefix, new Date().getTime()].join('');
+}
+
+uniqueString('argento');
+// 'argento1356107740868'
+</pre>
+<p>新uniqueString似乎可以工作。但是，如果需要再次变更，需要返回一个添加了前缀，并且后缀从某一个值开始增长的字符串，改怎么办？在这种情况下，新的实现可以用闭包来捕获增加值，并用作后缀：</p>
+<pre>
+function makeUniqueStringFunction(start) {
+    var COUNTER = start;
+    return function(prefix) {
+        return [prefix, COUNTER++].join('');
+    };
+}
+
+var uniqueString = makeUniqueStringFunction(0);
+
+uniqueString('dari');
+// 'dari0'
+
+uniqueString('dari');
+// 'dari1'
+</pre>
+<p>上面这个返回函数同时去捕获配置值的函数，在我看来就是一个移动的独立作用域，如果没有最外面那层，就是上面一个变量，下面一个函数，然后函数没运行一次，变量++，扒了外面那层，里面就很好理解了</p>
+<p>对于makeUniqueStringFunction函数，变量COUNTER被函数返回并捕获。这似乎工作的很好，但我们能不能在一个对象上实现相同的功能？列如：</p>
+<pre>
+var generator = {
+    count : 0,
+    uniqueString : function(prefix) {
+        return [prefix, this.count++].join('');
+    }
+};
+
+generator.uniqueString('bohr');
+// 'bohr0';
+
+generator.uniqueString('bohr');
+// 'bohr1';
+
+generator.count = 'gotcha';
+generator.uniqueString('bohr');
+// 'borhorNaN'
+generator.uniqueString.call({
+    count : 1337,
+    'bohr'
+});
+// 'bohr1337'
+</pre>
+<p>但他有一个缺点（除了他不是函数式），即不够安全，此时，事实上你的系统处于一个危险的状态。makeUniqueStringFunction所使用的方法隐藏了COUNTER。也就是说，COUNTER变量是返回闭包“私有”的。现在我并不是在讲究私有变量和对象属性，但有时候隐藏关键实现细节是很重要的。事实上我们可以使用JavaScript的秘密武器将COUNTER隐藏在generator中：</p>
+<pre>
+var omgenerator = (function(init) {
+    var COUNTER = init;
+
+    return {
+        uniqueString : function(prefix) {
+            return [prefix, COUNTER++].join('');
+        }
+    };
+})(0);
+
+omgenerator.uniqueString('lichking-');
+// 'lichking-0'
+</pre>
+<p>但值得指出的是，我会避免类似于makeUniqueStringFunctions这样的函数，除非他们是必要的。相反，我觉得你会很惊讶的发现在函数式编程中对状态的改变要求甚少。你需要时间来改变你的思维方式</p>
+
 
 <!-- markdown end -->
 </div>
@@ -168,7 +250,95 @@ iterateUntil(function(n) {
 }
 </pre>
 
-<p>一个为什么你可能需要创建一个以函数为返回值的函数的理由是，高阶函数的参数是用来“配置”返回函数的行为的</p>
+<p>一个为什么你可能需要创建一个以函数为返回值的函数的理由是，高阶函数的参数是用来“配置”返回函数的行为的，对于高阶函数makeAdder而言，他的参数配置了其返回函数每次添加数值的太小。</p>
+
+<pre>var add100 = makeAdder(100);
+add100(38);
+// 138
+</pre>
+
+<p>假设你需要一个能够生成唯一字符串的函数。实现可能如下所示：</p>
+
+<pre>function uniqueString(len) {
+    return Math.random().toString(36).substr(2, len);
+}
+
+uniqueString(10);
+// '3rm6ww5w0x'
+</pre>
+
+<p>然而，如果需要生成具有特定前缀的唯一字符串，改怎么办？可将uniqueString修改为：</p>
+
+<pre>function uniqueString(prefix) {
+    return [prefix, new Date().getTime()].join('');
+}
+
+uniqueString('argento');
+// 'argento1356107740868'
+</pre>
+
+<p>新uniqueString似乎可以工作。但是，如果需要再次变更，需要返回一个添加了前缀，并且后缀从某一个值开始增长的字符串，改怎么办？在这种情况下，新的实现可以用闭包来捕获增加值，并用作后缀：</p>
+
+<pre>function makeUniqueStringFunction(start) {
+    var COUNTER = start;
+    return function(prefix) {
+        return [prefix, COUNTER++].join('');
+    };
+}
+
+var uniqueString = makeUniqueStringFunction(0);
+
+uniqueString('dari');
+// 'dari0'
+
+uniqueString('dari');
+// 'dari1'
+</pre>
+
+<p>上面这个返回函数同时去捕获配置值的函数，在我看来就是一个移动的独立作用域，如果没有最外面那层，就是上面一个变量，下面一个函数，然后函数没运行一次，变量++，扒了外面那层，里面就很好理解了</p>
+
+<p>对于makeUniqueStringFunction函数，变量COUNTER被函数返回并捕获。这似乎工作的很好，但我们能不能在一个对象上实现相同的功能？列如：</p>
+
+<pre>var generator = {
+    count : 0,
+    uniqueString : function(prefix) {
+        return [prefix, this.count++].join('');
+    }
+};
+
+generator.uniqueString('bohr');
+// 'bohr0';
+
+generator.uniqueString('bohr');
+// 'bohr1';
+
+generator.count = 'gotcha';
+generator.uniqueString('bohr');
+// 'borhorNaN'
+generator.uniqueString.call({
+    count : 1337,
+    'bohr'
+});
+// 'bohr1337'
+</pre>
+
+<p>但他有一个缺点（除了他不是函数式），即不够安全，此时，事实上你的系统处于一个危险的状态。makeUniqueStringFunction所使用的方法隐藏了COUNTER。也就是说，COUNTER变量是返回闭包“私有”的。现在我并不是在讲究私有变量和对象属性，但有时候隐藏关键实现细节是很重要的。事实上我们可以使用JavaScript的秘密武器将COUNTER隐藏在generator中：</p>
+
+<pre>var omgenerator = (function(init) {
+    var COUNTER = init;
+
+    return {
+        uniqueString : function(prefix) {
+            return [prefix, COUNTER++].join('');
+        }
+    };
+})(0);
+
+omgenerator.uniqueString('lichking-');
+// 'lichking-0'
+</pre>
+
+<p>但值得指出的是，我会避免类似于makeUniqueStringFunctions这样的函数，除非他们是必要的。相反，我觉得你会很惊讶的发现在函数式编程中对状态的改变要求甚少。你需要时间来改变你的思维方式</p>
 <!-- content end -->
 </div>
 <br>
