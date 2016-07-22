@@ -170,8 +170,67 @@ omgenerator.uniqueString('lichking-');
 // 'lichking-0'
 </pre>
 <p>但值得指出的是，我会避免类似于makeUniqueStringFunctions这样的函数，除非他们是必要的。相反，我觉得你会很惊讶的发现在函数式编程中对状态的改变要求甚少。你需要时间来改变你的思维方式</p>
+<p>防止不存在的函数：fnull</p>
+<p>假设我们有一组需要执行乘法的数字数组，另一种有问题的场景是：一个函数接收一个配置对象作为输入来执行一些动作：</p>
+<pre>
+var nums = [1, 2, 3, null, 5];
 
+_.reduce(nums, function(total, n) {
+    return total * n;
+});
+// 0
 
+doSomething({
+    whoCares : 42,
+    critical : null
+});
+</pre>
+<p>在这两种情况下，有一个fnull函数将是很有用的。fnull接收一个函数及一些额外的参数，并返回一个只是调用给定的原始函数的函数，fnull神奇的地方在于，对于任何事null或undefined的参数，都用原来“默认”的参数来代替。这里将要展示的fnull是实现最为复杂的高阶函数，但他仍然是相当合理的。注意观察以下代码：</p>
+<pre>
+function fnull(fun /*, defaults */) {
+    var defaults = _.rest(arguments);
+
+    return function(/* args */) {
+        var args = _.map(arguments, function(e, i) {
+            return existy(e) ? e : defaults[i];
+        });
+
+        return fun.apply(null, args);
+    };
+}
+
+var safeMult = fnull(function(total, n) {
+    return total * n;
+}, 1, 1);
+
+_.reduce(nums, safeMult);
+// 30
+</pre>
+<p>为了解决配置对象的问题，可以通过以下方式来使用fnull：</p>
+<pre>
+function defaults(d) {
+    return function(o, k) {
+        var val = fnull(_.identity, d[k]);
+        return o && val(o[k]);
+    };
+}
+
+function doSomething(config) {
+    var lookup = defaults({
+        critical : 108
+    });
+
+    return lookup(config, 'critical');
+}
+
+doSomething({
+    critical : 9
+});
+// 9
+
+doSomething({});
+// 108
+</pre>
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -339,6 +398,71 @@ omgenerator.uniqueString('lichking-');
 </pre>
 
 <p>但值得指出的是，我会避免类似于makeUniqueStringFunctions这样的函数，除非他们是必要的。相反，我觉得你会很惊讶的发现在函数式编程中对状态的改变要求甚少。你需要时间来改变你的思维方式</p>
+
+<p>防止不存在的函数：fnull</p>
+
+<p>假设我们有一组需要执行乘法的数字数组，另一种有问题的场景是：一个函数接收一个配置对象作为输入来执行一些动作：</p>
+
+<pre>var nums = [1, 2, 3, null, 5];
+
+_.reduce(nums, function(total, n) {
+    return total * n;
+});
+// 0
+
+doSomething({
+    whoCares : 42,
+    critical : null
+});
+</pre>
+
+<p>在这两种情况下，有一个fnull函数将是很有用的。fnull接收一个函数及一些额外的参数，并返回一个只是调用给定的原始函数的函数，fnull神奇的地方在于，对于任何事null或undefined的参数，都用原来“默认”的参数来代替。这里将要展示的fnull是实现最为复杂的高阶函数，但他仍然是相当合理的。注意观察以下代码：</p>
+
+<pre>function fnull(fun /*, defaults */) {
+    var defaults = _.rest(arguments);
+
+    return function(/* args */) {
+        var args = _.map(arguments, function(e, i) {
+            return existy(e) ? e : defaults[i];
+        });
+
+        return fun.apply(null, args);
+    };
+}
+
+var safeMult = fnull(function(total, n) {
+    return total * n;
+}, 1, 1);
+
+_.reduce(nums, safeMult);
+// 30
+</pre>
+
+<p>为了解决配置对象的问题，可以通过以下方式来使用fnull：</p>
+
+<pre>function defaults(d) {
+    return function(o, k) {
+        var val = fnull(_.identity, d[k]);
+        return o &amp;&amp; val(o[k]);
+    };
+}
+
+function doSomething(config) {
+    var lookup = defaults({
+        critical : 108
+    });
+
+    return lookup(config, 'critical');
+}
+
+doSomething({
+    critical : 9
+});
+// 9
+
+doSomething({});
+// 108
+</pre>
 <!-- content end -->
 </div>
 <br>
