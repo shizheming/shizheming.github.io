@@ -1,107 +1,62 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="Keywords" content="blog"/>
-    <meta name="Description" content="blog"/>
-    <title>Simple</title>
-    <link rel="shortcut icon" href="/static/favicon.png"/>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title>Document</title>
 </head>
 <body>
-<div class="main">
-    <div class="header">
-    	<ul id="pages">
-            <li><a href="/">home</a></li>
-            <li><a href="/#/tags">tags</a></li>
-            <li><a href="/#/archive">archive</a></li>
-    	</ul>
-    </div>
-	<div class="wrap-header">
-	<h1>
-    <a href="/" id="title"></a>
-	</h1>
-	</div>
-<div id="md" style="display: none;">
-<!-- markdown -->
-<script src="//rwhstorage-pub.oss-cn-shanghai.aliyuncs.com/dist/js/formValidation.4.0.min.js"></script>
-11
-<!-- markdown end -->
-</div>
-<div class="entry" id="main">
-<!-- content -->
-<script src="//rwhstorage-pub.oss-cn-shanghai.aliyuncs.com/dist/js/formValidation.4.0.min.js"></script>
+<pre id="pre" style="font-size:22px;font-family:'Microsoft YaHei';">
+    js
+    < script src="//rwhstorage-pub.oss-cn-shanghai.aliyuncs.com/dist/js/formValidation.4.0.min.js"></script>
+    css
+    < link rel="stylesheet" href="http://rwhstorage-pub.oss-cn-shanghai.aliyuncs.com/dist/css/reset.css">
 
-<p>11</p>
-<!-- content end -->
-</div>
-<br>
-<br>
-    <div id="disqus_thread"></div>
-	<div class="footer">
-		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
-	</div>
-</div>
-<script src="main.js"></script>
-<script id="content" type="text/mustache">
-    <h1>{{title}}</h1>
-    <div class="tag">
-    {{date}}
-    {{#tags}}
-    <a href="/#/tag/{{name}}">#{{name}}</a>
-    {{/tags}}
-    </div>
-</script>
-<script id="pagesTemplate" type="text/mustache">
-    {{#pages}}
-    <li>
-        <a href="{{path}}">{{title}}</a>
-    </li>
-    {{/pages}}
-</script>
-<script>
-$(document).ready(function() {
-    $.ajax({
-        url: "main.json",
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-            $("#title").html(data.name);
-            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
-            var pagesHtml = pagesTemplate.render({"pages": data.pages});
-            $("#pages").append(pagesHtml);
-            //path
-            var path = "form.html";
-            //path end
-            var now = 0;
-            for (var i = 0; i < data.posts.length; ++i)
-                if (path == data.posts[i].path)
-                    now = i;
-            var post = data.posts[now];
-            var tmp = post.tags.split(" ");
-            var tags = [];
-            for (var i = 0; i < tmp.length; ++i)
-                if (tmp[i].length > 0)
-                    tags.push({"name": tmp[i]});
-            var contentTemplate = Hogan.compile($("#content").html());
-            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
-            $("#main").prepend(contentHtml);
-            if (data.disqus_shortname.length > 0) {
-                var disqus_shortname = data.disqus_shortname;
-                (function() {
-                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                })();
-            }
-        }
-    });
-});
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
-</script>
+
+    //栗子
+    < input type="text" placeholder="辅导员完整的真实姓名" id="instructor">
+    < input type="text" placeholder="手机号" id="instructorPhone">
+    < span id="ok">提交表单< /span>
+
+
+
+    //表单验证----占时是对输入框有效
+
+    ////////////////1.初始表单对象
+
+                    var obj = formverify(
+                        'ok',        //点击提交的id
+                        function() {}    //全部验证通过后要干的事情回调
+                        
+                    );
+
+
+
+    ////////////////2.初始完的表单对象拥有2个方法add，remove。
+    ////////////////obj.add添加某一项的验证
+
+                    obj.add({
+                        name : '辅导员完整的真实姓名',  //给用户的提示信息
+                        id : 'instructor',              //控件的id
+                        *type : 'tel',                  //内置的验证的选项
+                                 tel       //电话  
+                                 IDcard    //身份证
+                                 mail      //邮箱
+                        *regex : /[a-z][0-1]/                     //正则验证
+                    });
+
+                    //带*的key可以省略
+                    //2个都不写默认验证有没有，2个都写regex权重高于type
+
+
+
+    ////////////////obj.remove删除某一项控件验证
+
+                    obj.remove(
+                        'instructor'    //控件id
+                    );
+</pre>
 </body>
 </html>
+<script>
+
+</script>
