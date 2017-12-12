@@ -1,0 +1,20 @@
+{
+  "name": "shizheming.github.io",
+  "version": "1.0.0",
+  "description": "szm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shizheming/shizheming.github.io.git"
+  },
+  "author": "szm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shizheming/shizheming.github.io/issues"
+  },
+  "homepage": "https://github.com/shizheming/shizheming.github.io#readme",
+  "devDependencies": {}
+}
