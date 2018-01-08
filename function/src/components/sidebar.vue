@@ -1,6 +1,10 @@
 <template>
     <div class="left">
         <h2>动词</h2>
+        <h3>迭代-遍历</h3>
+        <ul>
+        	<li><a href="#forEach">_.forEach</a></li>
+        </ul>
         <h3>克隆-复制</h3>
         <ul>
             <li><a href="#clone">_.clone</a></li>
@@ -34,6 +38,8 @@
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isEqual">_.isEqual</a></li>
+            <li><a href="#reversePredicate">_.reversePredicate</a></li>
+
         </ul>
     </div>
 </template>
@@ -53,8 +59,6 @@ export default {
 <style>
 h2, h3{
     font-weight:400;
-}
-h3{
     font-style:italic;
 }
 a{
@@ -80,5 +84,9 @@ ul>li{
 }
 li{
     line-height:1.8;
+    font-family:'Consolas','Courier New','monospace';
+}
+.left li{
+	font-size:14px;
 }
 </style>

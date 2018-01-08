@@ -1,14 +1,26 @@
 <template>
     <div class="ssss">
-        <div class="name">tobe</div>
+        <div class="name">What's the name?</div>
         <sidebar></sidebar>
         <div class="content">
+            <div id="forEach">
+                <h4>_.forEach(object, iterator)</h4>
+                <div class="describe">
+                    <p>迭代一个对象</p>
+                    <h5>参数</h5>
+                    <div>object<em>（Array || Object）</em>：需要迭代的对象</div>
+                    <div>iterator<em>（Function）</em>：迭代器</div>
+                    <h5>返回值</h5>
+                    <div><em>（undefined）</em>：返回undefined</div>
+                </div>
+                <forEach></forEach>
+            </div>
             <div id="clone">
-                <h4>_.clone(obj)</h4>
+                <h4>_.clone(object)</h4>
                 <div class="describe">
                     <p>复制对象（浅复制）</p>
                     <h5>参数</h5>
-                    <div>obj<em>（Array || Object）</em>：需要复制的对象</div>
+                    <div>object<em>（Array || Object）</em>：需要复制的对象</div>
                     <h5>返回值</h5>
                     <div><em>（Array || Object）</em>：返回复制出的新对象</div>
                 </div>
@@ -84,11 +96,11 @@
                 <isNumber></isNumber>
             </div>
             <div id="isInteger">
-                <h4>_.isInteger(num)</h4>
+                <h4>_.isInteger(n)</h4>
                 <div class="describe">
                     <p>判断一个值是不是整数</p>
                     <h5>参数</h5>
-                    <div>num<em>（Number）</em>：需要判断的数</div>
+                    <div>n<em>（all data type）</em>：需要判断的值</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
@@ -194,29 +206,40 @@
                 <isFuture></isFuture>
             </div>
             <div id="isEqual">
-                <h4>_.isEqual(obj1, obj2)</h4>
+                <h4>_.isEqual(object1, object2)</h4>
                 <div class="describe">
                     <p>判断2个对象是否字面上的相等</p>
                     <h5>参数</h5>
-                    <div>obj1<em>（Object || Array）</em>：需要对比的第一个值</div>
-                    <div>obj2<em>（Object || Array）</em>：需要对比的第二个值</div>
+                    <div>object1<em>（Object || Array）</em>：需要对比的第一个值</div>
+                    <div>object2<em>（Object || Array）</em>：需要对比的第二个值</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
                 <isEqual></isEqual>
             </div>
             <div id="isExistence">
-                <h4>_.isExistence(obj, val, [...])</h4>
+                <h4>_.isExistence(object, val, [...])</h4>
                 <div class="describe">
                     <p>判断一个集合中是否存在某种值</p>
                     <h5>参数</h5>
-                    <div>obj<em>（Object || Array）</em>：需要被检验的集合</div>
+                    <div>object<em>（Object || Array）</em>：需要被检验的集合</div>
                     <div>val<em>（base data type || Function）</em>：需要检测的值或是谓词函数</div>
                     <div>[...]<em>（base data type || Function）</em>：需要检测的值或是谓词函数</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
                 <isExistence></isExistence>
+            </div>
+            <div id="reversePredicate">
+                <h4>_.reversePredicate(predicate)</h4>
+                <div class="describe">
+                    <p>把谓词函数反转过来</p>
+                    <h5>参数</h5>
+                    <div>predicate<em>（Function）</em>：需要被反转的谓词函数</div>
+                    <h5>返回值</h5>
+                    <div><em>（Function）</em>：返回一个与原谓词函数相反的谓词函数</div>
+                </div>
+                <reversePredicate></reversePredicate>
             </div>
         </div>
     </div>
@@ -243,6 +266,8 @@ import isPast from './isPast.vue';
 import isFuture from './isFuture.vue';
 import isEqual from './isEqual.vue';
 import isExistence from './isExistence.vue';
+import reversePredicate from './reversePredicate.vue';
+import forEach from './forEach.vue';
 
 
 import _ from '../js/ecma';
@@ -269,6 +294,8 @@ export default {
         isFuture,
         isEqual,
         isExistence,
+        reversePredicate,
+        forEach,
     },
 }
 </script>
@@ -316,5 +343,8 @@ pre{
 .content >div{
     border:1px solid #e8e8e8;
     margin-bottom:20px;
+}
+.name{
+    font-family:'Consolas','Courier New','monospace'
 }
 </style>
