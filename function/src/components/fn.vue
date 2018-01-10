@@ -1,26 +1,38 @@
 <template>
     <div class="ssss">
-        <div class="name">What's the name?</div>
+        <div class="name">TOBE</div>
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
-                <h4>_.forEach(object, iterator)</h4>
+                <h4>_.forEach(collection, [iterator = _.identity])</h4>
                 <div class="describe">
                     <p>迭代一个对象</p>
                     <h5>参数</h5>
-                    <div>object<em>（Array || Object）</em>：需要迭代的对象</div>
-                    <div>iterator<em>（Function）</em>：迭代器</div>
+                    <div>collection<em>（Array || Object）</em>：需要迭代的对象</div>
+                    <div>[iterator = _.identity]<em>（Function）</em>：迭代器</div>
                     <h5>返回值</h5>
                     <div><em>（undefined）</em>：返回undefined</div>
                 </div>
                 <forEach></forEach>
             </div>
+            <div id="filter">
+                <h4>_.filter(collection, [predicate = _.identity])</h4>
+                <div class="describe">
+                    <p>过滤一个对象</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要过滤的对象</div>
+                    <div>[predicate = _.identity]<em>（Function）</em>：迭代器</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回过滤后的对象</div>
+                </div>
+                <filters></filters>
+            </div>
             <div id="clone">
-                <h4>_.clone(object)</h4>
+                <h4>_.clone(collection)</h4>
                 <div class="describe">
                     <p>复制对象（浅复制）</p>
                     <h5>参数</h5>
-                    <div>object<em>（Array || Object）</em>：需要复制的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要复制的对象</div>
                     <h5>返回值</h5>
                     <div><em>（Array || Object）</em>：返回复制出的新对象</div>
                 </div>
@@ -183,55 +195,33 @@
                 </div>
                 <isObject></isObject>
             </div>
-            <div id="isPast">
-                <h4>_.isPast(time)</h4>
-                <div class="describe">
-                    <p>判断时间是否已过去</p>
-                    <h5>参数</h5>
-                    <div>time<em>（Number）</em>：需要时间戳</div>
-                    <h5>返回值</h5>
-                    <div><em>（Boolean）</em>：返回布尔值</div>
-                </div>
-                <isPast></isPast>
-            </div>
-            <div id="isFuture">
-                <h4>_.isFuture(time)</h4>
-                <div class="describe">
-                    <p>判断时间是否在未来</p>
-                    <h5>参数</h5>
-                    <div>time<em>（Number）</em>：需要时间戳</div>
-                    <h5>返回值</h5>
-                    <div><em>（Boolean）</em>：返回布尔值</div>
-                </div>
-                <isFuture></isFuture>
-            </div>
             <div id="isEqual">
-                <h4>_.isEqual(object1, object2)</h4>
+                <h4>_.isEqual(collection1, collection2)</h4>
                 <div class="describe">
                     <p>判断2个对象是否字面上的相等</p>
                     <h5>参数</h5>
-                    <div>object1<em>（Object || Array）</em>：需要对比的第一个值</div>
-                    <div>object2<em>（Object || Array）</em>：需要对比的第二个值</div>
+                    <div>collection1<em>（Object || Array）</em>：需要对比的第一个值</div>
+                    <div>collection2<em>（Object || Array）</em>：需要对比的第二个值</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
                 <isEqual></isEqual>
             </div>
             <div id="isExistence">
-                <h4>_.isExistence(object, val, [...])</h4>
+                <h4>_.isExistence(object, value, [isDeep])</h4>
                 <div class="describe">
-                    <p>判断一个集合中是否存在某种值</p>
+                    <p>判断一个集合中是否存在某些值</p>
                     <h5>参数</h5>
                     <div>object<em>（Object || Array）</em>：需要被检验的集合</div>
-                    <div>val<em>（base data type || Function）</em>：需要检测的值或是谓词函数</div>
-                    <div>[...]<em>（base data type || Function）</em>：需要检测的值或是谓词函数</div>
+                    <div>value<em>（Array）</em>：需要检测的值或是谓词函数</div>
+                    <div>[isDeep]<em>（Boolean）</em>：是否需要深度验证</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
                 <isExistence></isExistence>
             </div>
-            <div id="reversePredicate">
-                <h4>_.reversePredicate(predicate)</h4>
+            <div id="negate">
+                <h4>_.negate(predicate)</h4>
                 <div class="describe">
                     <p>把谓词函数反转过来</p>
                     <h5>参数</h5>
@@ -239,7 +229,7 @@
                     <h5>返回值</h5>
                     <div><em>（Function）</em>：返回一个与原谓词函数相反的谓词函数</div>
                 </div>
-                <reversePredicate></reversePredicate>
+                <negate></negate>
             </div>
         </div>
     </div>
@@ -262,12 +252,11 @@ import isDate from './isDate.vue';
 import isRegExp from './isRegExp.vue';
 import isBoolean from './isBoolean.vue';
 import isObject from './isObject.vue';
-import isPast from './isPast.vue';
-import isFuture from './isFuture.vue';
 import isEqual from './isEqual.vue';
 import isExistence from './isExistence.vue';
-import reversePredicate from './reversePredicate.vue';
+import negate from './negate.vue';
 import forEach from './forEach.vue';
+import filters from './filter.vue';
 
 
 import _ from '../js/ecma';
@@ -290,12 +279,11 @@ export default {
         isRegExp,
         isBoolean,
         isObject,
-        isPast,
-        isFuture,
         isEqual,
         isExistence,
-        reversePredicate,
+        negate,
         forEach,
+        filters,
     },
 }
 </script>

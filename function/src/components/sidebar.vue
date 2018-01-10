@@ -5,6 +5,10 @@
         <ul>
         	<li><a href="#forEach">_.forEach</a></li>
         </ul>
+        <h3>过滤-寻找</h3>
+        <ul>
+        	<li><a href="#filter">_.filter</a></li>
+        </ul>
         <h3>克隆-复制</h3>
         <ul>
             <li><a href="#clone">_.clone</a></li>
@@ -21,8 +25,6 @@
             <li><a href="#isNaN">_.isNaN</a></li>
             <li><a href="#isNumber">_.isNumber</a></li>
             <li><a href="#isInteger">_.isInteger</a></li>
-            <li><a href="#isPast">_.isPast</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isArguments">_.isArguments</a></li>
             <li><a href="#isFunction">_.isFunction</a></li>
             <li><a href="#isDate">_.isDate</a></li>
@@ -38,7 +40,7 @@
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isEqual">_.isEqual</a></li>
-            <li><a href="#reversePredicate">_.reversePredicate</a></li>
+            <li><a href="#negate">_.negate</a></li>
 
         </ul>
     </div>
@@ -60,6 +62,14 @@ export default {
 h2, h3{
     font-weight:400;
     font-style:italic;
+    margin:0;
+}
+h2{
+	font-size:14px;
+	font-weight:700;
+}
+h3{
+	font-size:14px;
 }
 a{
     color:#000;
@@ -88,5 +98,8 @@ li{
 }
 .left li{
 	font-size:14px;
+}
+.left ul{
+	margin:0;
 }
 </style>
