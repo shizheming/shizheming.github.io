@@ -1,17 +1,31 @@
 <template>
     <div class="left">
         <h2>动词</h2>
-        <h3>迭代-遍历</h3>
+        <h3>迭代</h3>
         <ul>
         	<li><a href="#forEach">_.forEach</a></li>
         </ul>
-        <h3>过滤-寻找</h3>
+        <h3>过滤</h3>
         <ul>
         	<li><a href="#filter">_.filter</a></li>
         </ul>
-        <h3>克隆-复制</h3>
+        <h3>克隆</h3>
         <ul>
             <li><a href="#clone">_.clone</a></li>
+        </ul>
+        <h3>消抖</h3>
+        <ul>
+            <li><a href="#debounce">_.debounce</a></li>
+        </ul>
+        <h3>次数</h3>
+        <ul>
+            <li><a href="#once">_.once</a></li>
+            <li><a href="#after">_.after</a></li>
+            <li><a href="#before">_.before</a></li>
+        </ul>
+        <h3>装饰</h3>
+        <ul>
+            <li><a href="#decorate">_.decorate</a></li>
         </ul>
         <h3>随机</h3>
         <ul>
@@ -32,7 +46,6 @@
             <li><a href="#isBoolean">_.isBoolean</a></li>
             <li><a href="#isObject">_.isObject</a></li>
             <li><a href="#isExistence">_.isExistence</a></li>
-            <li><a href="#Array.isArray">Array.isArray</a></li>
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isFuture">_.isFuture</a></li>

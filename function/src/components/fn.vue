@@ -4,39 +4,101 @@
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
-                <h4>_.forEach(collection, [iterator = _.identity])</h4>
+                <h4>_.forEach(collection, iterator)</h4>
                 <div class="describe">
                     <p>迭代一个对象</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要迭代的对象</div>
-                    <div>[iterator = _.identity]<em>（Function）</em>：迭代器</div>
+                    <div>iterator<em>（Function）</em>：迭代器</div>
                     <h5>返回值</h5>
                     <div><em>（undefined）</em>：返回undefined</div>
                 </div>
                 <forEach></forEach>
             </div>
             <div id="filter">
-                <h4>_.filter(collection, [predicate = _.identity])</h4>
+                <h4>_.filter(collection, predicate)</h4>
                 <div class="describe">
                     <p>过滤一个对象</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要过滤的对象</div>
-                    <div>[predicate = _.identity]<em>（Function）</em>：迭代器</div>
+                    <div>predicate<em>（Function）</em>：迭代器</div>
                     <h5>返回值</h5>
                     <div><em>（Array || Object）</em>：返回过滤后的对象</div>
                 </div>
                 <filters></filters>
             </div>
             <div id="clone">
-                <h4>_.clone(collection)</h4>
+                <h4>_.clone(collection, [isDeep = false])</h4>
                 <div class="describe">
-                    <p>复制对象（浅复制）</p>
+                    <p>复制对象</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要复制的对象</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深克隆</div>
+                    <h5>PS</h5>
+                    <div>不复制访问器属性</div>
                     <h5>返回值</h5>
                     <div><em>（Array || Object）</em>：返回复制出的新对象</div>
                 </div>
                 <clone></clone>
+            </div>
+            <div id="debounce">
+                <h4>_.debounce(func, wait)</h4>
+                <div class="describe">
+                    <p>间隔时间内，只执行一次函数，而且是第一次</p>
+                    <h5>参数</h5>
+                    <div>func<em>（Function）</em>：需要间隔的函数</div>
+                    <div>wait<em>（Number）</em>：需要间隔的时间</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：返回等待函数的返回值</div>
+                </div>
+                <debounce></debounce>
+            </div>
+            <div id="once">
+                <h4>_.once(func)</h4>
+                <div class="describe">
+                    <p>调用多次，只实行一次的函数，只执行第一次</p>
+                    <h5>参数</h5>
+                    <div>func<em>（Function）</em>：需要执行的函数</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：返回执行函数的返回值</div>
+                </div>
+                <once></once>
+            </div>
+            <div id="after">
+                <h4>_.after(times, func)</h4>
+                <div class="describe">
+                    <p>调用多次后才执行函数</p>
+                    <h5>参数</h5>
+                    <div>times<em>（Number）</em>：需要几次才执行函数</div>
+                    <div>func<em>（Function）</em>：需要执行的函数</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：返回执行函数的返回值</div>
+                </div>
+                <after></after>
+            </div>
+            <div id="before">
+                <h4>_.before(times, func)</h4>
+                <div class="describe">
+                    <p>在调用次数里允许执行函数</p>
+                    <h5>参数</h5>
+                    <div>times<em>（Number）</em>：可以执行多少次</div>
+                    <div>func<em>（Function）</em>：需要执行的函数</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：返回执行函数的返回值</div>
+                </div>
+                <before></before>
+            </div>
+            <div id="decorate">
+                <h4>_.decorate(before, after)</h4>
+                <div class="describe">
+                    <p>把2个函数合起来一起执行</p>
+                    <h5>参数</h5>
+                    <div>before<em>（Function）</em>：先执行的函数</div>
+                    <div>after<em>（Function）</em>：后执行的函数</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：后执行的函数的返回值</div>
+                </div>
+                <decorate></decorate>
             </div>
             <div id="randomNumber">
                 <h4>_.randomNumber([digit = 1], [digit2])</h4>
@@ -208,13 +270,13 @@
                 <isEqual></isEqual>
             </div>
             <div id="isExistence">
-                <h4>_.isExistence(object, value, [isDeep])</h4>
+                <h4>_.isExistence(object, value, [isDeep = false])</h4>
                 <div class="describe">
                     <p>判断一个集合中是否存在某些值</p>
                     <h5>参数</h5>
                     <div>object<em>（Object || Array）</em>：需要被检验的集合</div>
                     <div>value<em>（Array）</em>：需要检测的值或是谓词函数</div>
-                    <div>[isDeep]<em>（Boolean）</em>：是否需要深度验证</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度验证</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
@@ -257,6 +319,11 @@ import isExistence from './isExistence.vue';
 import negate from './negate.vue';
 import forEach from './forEach.vue';
 import filters from './filter.vue';
+import debounce from './debounce.vue';
+import once from './once.vue';
+import after from './after.vue';
+import before from './before.vue';
+import decorate from './decorate.vue';
 
 
 import _ from '../js/ecma';
@@ -284,6 +351,11 @@ export default {
         negate,
         forEach,
         filters,
+        debounce,
+        once,
+        after,
+        before,
+        decorate,
     },
 }
 </script>
