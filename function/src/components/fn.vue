@@ -105,11 +105,11 @@
                 <div class="describe">
                     <p>随机数字</p>
                     <h5>参数</h5>
-                    <div>1. [digit = 1]<em>（Number）</em>：需要随机一串数的位数</div>
-                    <div>2. [digit = 1], [digit2]<em>（Number）</em>：需要开始的数和结束的数</div>
+                    <div>[digit = 1]<em>（Number）</em>：需要随机一串数的位数</div>
+                    <div>[digit = 1], [digit2]<em>（Number）</em>：需要开始的数和结束的数</div>
                     <h5>返回值</h5>
-                    <div>1. <em>（Number）</em>：返回参数位数的一串随机数</div>
-                    <div>2. <em>（Number）</em>：返回两个值之间的随机数</div>
+                    <div><em>（Number）</em>：返回参数位数的一串随机数</div>
+                    <div><em>（Number）</em>：返回两个值之间的随机数</div>
                 </div>
                 <randomNumber></randomNumber>
             </div>
@@ -293,6 +293,54 @@
                 </div>
                 <negate></negate>
             </div>
+            <div id="identity">
+                <h4>_.identity(value)</h4>
+                <div class="describe">
+                    <p>将值变成函数获取（原始迭代器）</p>
+                    <h5>参数</h5>
+                    <div>value<em>（all type data）</em>：需要迭代的参数</div>
+                    <h5>返回值</h5>
+                    <div><em>（all type data）</em>：返回迭代的参数</div>
+                </div>
+                <identity></identity>
+            </div>
+            <div id="link">
+                <h4>_.link()</h4>
+                <div class="describe">
+                    <p>创建一个链表</p>
+                    <h5>方法</h5>
+                    <div>添加元素-add(newElement, [oldElement])</div>
+                    <h5>参数</h5>
+                    <div>newElement<em>（Function）</em>：把元素添加到链表尾部</div>
+                    <div>newElement, [oldElement]<em>（Function）</em>：把元素添加到链表指定元素的后面</div>
+                    <h5>返回值</h5>
+                    <div><em>（Number）</em>：返回链表元素的长度</div>
+                    <h5>方法</h5>
+                    <div>替换元素-replace(newElement, oldElement)</div>
+                    <h5>参数</h5>
+                    <div>newElement<em>（Function）</em>：替换成的新元素</div>
+                    <div>oldElement<em>（Function）</em>：被替换的老元素</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回替换的链表元素</div>
+                    <h5>方法</h5>
+                    <div>删除元素-delete(element)</div>
+                    <h5>参数</h5>
+                    <div>element<em>（Function）</em>：需要删除的元素</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回删除的链表元素</div>
+                    <h5>方法</h5>
+                    <div>寻找元素-find(element)</div>
+                    <h5>参数</h5>
+                    <div>element<em>（Function）</em>：需要寻找的元素</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回寻找到的链表元素</div>
+                    <h5>方法</h5>
+                    <div>寻找元素-display()</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回所有的链表元素</div>
+                </div>
+                <links></links>
+            </div>
         </div>
     </div>
 </template>
@@ -324,6 +372,8 @@ import once from './once.vue';
 import after from './after.vue';
 import before from './before.vue';
 import decorate from './decorate.vue';
+import identity from './identity.vue';
+import links from './link.vue';
 
 
 import _ from '../js/ecma';
@@ -356,6 +406,8 @@ export default {
         after,
         before,
         decorate,
+        identity,
+        links,
     },
 }
 </script>

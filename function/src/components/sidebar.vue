@@ -54,7 +54,15 @@
             <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isEqual">_.isEqual</a></li>
             <li><a href="#negate">_.negate</a></li>
-
+        </ul>
+        <h2>名词</h2>
+        <h3>迭代器</h3>
+        <ul>
+            <li><a href="#identity">_.identity</a></li>
+        </ul>
+        <h3>链表</h3>
+        <ul>
+            <li><a href="#link">_.link</a></li>
         </ul>
     </div>
 </template>
