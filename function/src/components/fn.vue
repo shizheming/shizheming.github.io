@@ -27,6 +27,41 @@
                 </div>
                 <filters></filters>
             </div>
+            <div id="findKey">
+                <h4>_.findKey(collection, value)</h4>
+                <div class="describe">
+                    <p>通过对象的value寻找key</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
+                    <div>value<em>（String || Number || Boolean）</em>：通过值寻找</div>
+                    <h5>返回值</h5>
+                    <div><em>（String）</em>：返回值对应的key</div>
+                </div>
+                <findKey></findKey>
+            </div>
+            <div id="value">
+                <h4>_.value(collection, isDeep)</h4>
+                <div class="describe">
+                    <p>把对象的值全部拿出来</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
+                    <div>isDeep<em>（Boolean）</em>：是否深查找</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回值对应值的数组合集</div>
+                </div>
+                <value></value>
+            </div>
+            <div id="key">
+                <h4>_.key(collection)</h4>
+                <div class="describe">
+                    <p>把对象的key全部拿出来</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回值对应键的数组合集</div>
+                </div>
+                <key></key>
+            </div>
             <div id="clone">
                 <h4>_.clone(collection, [isDeep = false])</h4>
                 <div class="describe">
@@ -52,6 +87,11 @@
                     <div><em>（all data type）</em>：返回等待函数的返回值</div>
                 </div>
                 <debounce></debounce>
+                <div class="describe">
+                    <h5>demo</h5>
+                    <span>{{debounceData}}</span>
+                    <button @click="dbf">+1</button>
+                </div>
             </div>
             <div id="once">
                 <h4>_.once(func)</h4>
@@ -91,7 +131,7 @@
             <div id="decorate">
                 <h4>_.decorate(before, after)</h4>
                 <div class="describe">
-                    <p>把2个函数合起来一起执行</p>
+                    <p>把2个函数合起来一起执行，起到装饰的作用</p>
                     <h5>参数</h5>
                     <div>before<em>（Function）</em>：先执行的函数</div>
                     <div>after<em>（Function）</em>：后执行的函数</div>
@@ -99,6 +139,50 @@
                     <div><em>（all data type）</em>：后执行的函数的返回值</div>
                 </div>
                 <decorate></decorate>
+            </div>
+            <div id="state">
+                <h4>_.state([state...])</h4>
+                <div class="describe">
+                    <p>把各种状态按顺序执行</p>
+                    <h5>参数</h5>
+                    <div>[state...]<em>（Function）</em>：各种状态</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回一个对象，对象中有方法</div>
+                    <h5>方法</h5>
+                    <h5>执行状态</h5>
+                    <div>currState([isLeft = true])</div>
+                    <h5>参数</h5>
+                    <div>[isLeft = true]<em>（Boolean）</em>：是否需要正序执行状态</div>
+                    <h5>返回值</h5>
+                    <div><em>（all data type）</em>：当前状态函数运行的返回值</div>
+                    <h5>添加状态</h5>
+                    <div>addState(newState, [oldState])</div>
+                    <h5>参数</h5>
+                    <div>newState<em>（Function）</em>：把新的状态添加到尾部</div>
+                    <div>[oldState]<em>（Function）</em>：把新的状态添加到指定状态的后面</div>
+                    <h5>返回值</h5>
+                    <div><em>（Number）</em>：返回所有状态的长度</div>
+                    <h5>替换状态</h5>
+                    <div>replaceState(newState, oldState)</div>
+                    <h5>参数</h5>
+                    <div>newState<em>（Function）</em>：需要替换成的新状态</div>
+                    <div>oldState<em>（Function）</em>：被替换的老状态</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回替换成的新状态</div>
+                    <h5>删除状态</h5>
+                    <div>deleteState(state)</div>
+                    <h5>参数</h5>
+                    <div>state<em>（Function）</em>：需要删除的状态</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回删除的状态</div>
+                    <h5>设置状态</h5>
+                    <div>setState(state)</div>
+                    <h5>参数</h5>
+                    <div>state<em>（Function）</em>：需要设置的当前新状态</div>
+                    <h5>返回值</h5>
+                    <div><em>（all type data）</em>：返回当前执行状态函数的返回值</div>
+                </div>
+                <state></state>
             </div>
             <div id="randomNumber">
                 <h4>_.randomNumber([digit = 1], [digit2])</h4>
@@ -146,6 +230,11 @@
                     <div><em>（String）</em>：返回一串HSL</div>
                 </div>
                 <randomColor></randomColor>
+                <div class="describe">
+                    <h5>demo</h5>
+                    <div :style="{backgroundColor:randomColorData,width:'100px',height:'100px', display:'inline-block',verticalAlign:'bottom'}"></div>
+                    <button @click="randomColorFunc">随机颜色</button>
+                </div>
             </div>
             <div id="isNaN">
                 <h4>_.isNaN(n)</h4>
@@ -305,37 +394,47 @@
                 <identity></identity>
             </div>
             <div id="link">
-                <h4>_.link()</h4>
+                <h4>_.link([element...])</h4>
                 <div class="describe">
                     <p>创建一个链表</p>
+                    <h5>参数</h5>
+                    <div>[element...]<em>（Function）</em>：需要添加的元素</div>
+                    <h5>返回值</h5>
+                    <div><em>（Object）</em>：返回一个对象，对象中有属性和方法</div>
+                    <h5>属性</h5>
+                    <div>head：头部元素</div>
+                    <div>tail：尾部元素</div>
                     <h5>方法</h5>
-                    <div>添加元素-add(newElement, [oldElement])</div>
+                    <h5>添加元素</h5>
+                    <div>add(newElement, [oldElement])</div>
                     <h5>参数</h5>
                     <div>newElement<em>（Function）</em>：把元素添加到链表尾部</div>
-                    <div>newElement, [oldElement]<em>（Function）</em>：把元素添加到链表指定元素的后面</div>
+                    <div>[oldElement]<em>（Function）</em>：把元素添加到链表指定元素的后面</div>
                     <h5>返回值</h5>
                     <div><em>（Number）</em>：返回链表元素的长度</div>
-                    <h5>方法</h5>
-                    <div>替换元素-replace(newElement, oldElement)</div>
+                    <h5>替换元素</h5>
+                    <div>replace(newElement, oldElement)</div>
                     <h5>参数</h5>
-                    <div>newElement<em>（Function）</em>：替换成的新元素</div>
+                    <div>newElement<em>（Function）</em>：需要替换成的新元素</div>
                     <div>oldElement<em>（Function）</em>：被替换的老元素</div>
                     <h5>返回值</h5>
-                    <div><em>（Object）</em>：返回替换的链表元素</div>
-                    <h5>方法</h5>
-                    <div>删除元素-delete(element)</div>
+                    <div><em>（Object）</em>：返回替换成的新链表元素</div>
+                    <h5>删除元素</h5>
+                    <div>delete(element)</div>
                     <h5>参数</h5>
                     <div>element<em>（Function）</em>：需要删除的元素</div>
                     <h5>返回值</h5>
                     <div><em>（Object）</em>：返回删除的链表元素</div>
-                    <h5>方法</h5>
-                    <div>寻找元素-find(element)</div>
+                    <h5>寻找元素</h5>
+                    <div>find(element)</div>
                     <h5>参数</h5>
                     <div>element<em>（Function）</em>：需要寻找的元素</div>
                     <h5>返回值</h5>
                     <div><em>（Object）</em>：返回寻找到的链表元素</div>
-                    <h5>方法</h5>
-                    <div>寻找元素-display()</div>
+                    <h5>寻找元素</h5>
+                    <div>display()</div>
+                    <h5>参数</h5>
+                    <div>无</div>
                     <h5>返回值</h5>
                     <div><em>（Array）</em>：返回所有的链表元素</div>
                 </div>
@@ -374,11 +473,36 @@ import before from './before.vue';
 import decorate from './decorate.vue';
 import identity from './identity.vue';
 import links from './link.vue';
+import state from './state.vue';
+import findKey from './findKey.vue';
+import value from './value.vue';
+import key from './key.vue';
+
 
 
 import _ from '../js/ecma';
 
 export default {
+    data () {
+        return {
+            debounceData : 10,
+            randomColorData : '#ccc',
+        };
+    },
+    mounted () {
+        this.debounce = _.debounce(this.debounceFunc, 1000);
+    },
+    methods : {
+        debounceFunc () {
+            this.debounceData += 1;
+        },
+        dbf () {
+            this.debounce();
+        },
+        randomColorFunc () {
+            this.randomColorData = _.randomColor();
+        },
+    },
     components : {
         sidebar,
         clone,
@@ -408,6 +532,10 @@ export default {
         decorate,
         identity,
         links,
+        state,
+        findKey,
+        value,
+        key,
     },
 }
 </script>

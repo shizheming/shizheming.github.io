@@ -1,13 +1,16 @@
 <template>
     <div class="left">
-        <h2>动词</h2>
+        <h2>修饰</h2>
         <h3>迭代</h3>
         <ul>
         	<li><a href="#forEach">_.forEach</a></li>
         </ul>
         <h3>过滤</h3>
         <ul>
-        	<li><a href="#filter">_.filter</a></li>
+            <li><a href="#filter">_.filter</a></li>
+            <li><a href="#findKey">_.findKey</a></li>
+            <li><a href="#value">_.value</a></li>
+        	<li><a href="#key">_.key</a></li>
         </ul>
         <h3>克隆</h3>
         <ul>
@@ -26,6 +29,10 @@
         <h3>装饰</h3>
         <ul>
             <li><a href="#decorate">_.decorate</a></li>
+        </ul>
+        <h3>状态</h3>
+        <ul>
+            <li><a href="#state">_.state</a></li>
         </ul>
         <h3>随机</h3>
         <ul>
@@ -46,16 +53,10 @@
             <li><a href="#isBoolean">_.isBoolean</a></li>
             <li><a href="#isObject">_.isObject</a></li>
             <li><a href="#isExistence">_.isExistence</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
-            <li><a href="#isFuture">_.isFuture</a></li>
             <li><a href="#isEqual">_.isEqual</a></li>
             <li><a href="#negate">_.negate</a></li>
         </ul>
-        <h2>名词</h2>
+        <h2>实体</h2>
         <h3>迭代器</h3>
         <ul>
             <li><a href="#identity">_.identity</a></li>
