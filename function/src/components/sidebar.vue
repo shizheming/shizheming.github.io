@@ -10,7 +10,7 @@
             <li><a href="#filter">_.filter</a></li>
             <li><a href="#findKey">_.findKey</a></li>
             <li><a href="#value">_.value</a></li>
-        	<li><a href="#key">_.key</a></li>
+        	<li><a href="#findCollection">_.findCollection</a></li>
         </ul>
         <h3>克隆</h3>
         <ul>

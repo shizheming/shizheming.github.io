@@ -40,27 +40,30 @@
                 <findKey></findKey>
             </div>
             <div id="value">
-                <h4>_.value(collection, isDeep)</h4>
+                <h4>_.value(collection, [isDeep = false])</h4>
                 <div class="describe">
                     <p>把对象的值全部拿出来</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：查找的对象</div>
-                    <div>isDeep<em>（Boolean）</em>：是否深查找</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否深查找</div>
                     <h5>返回值</h5>
                     <div><em>（Array）</em>：返回值对应值的数组合集</div>
                 </div>
                 <value></value>
             </div>
-            <div id="key">
-                <h4>_.key(collection)</h4>
+            <div id="findCollection">
+                <h4>_.findCollection(collection, value, [callback = isDeep], [isDeep = false])</h4>
                 <div class="describe">
-                    <p>把对象的key全部拿出来</p>
+                    <p>通过值和筛选条件找到想要的对象</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：查找的对象</div>
+                    <div>value<em>（String || Number || Boolean || Object）</em>：通过这个值查找</div>
+                    <div>[callback = isDeep]<em>（Function）</em>：添加筛选的条件</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否深查找</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回值对应键的数组合集</div>
+                    <div><em>（Array）</em>：返回一个数组合集</div>
                 </div>
-                <key></key>
+                <findCollection></findCollection>
             </div>
             <div id="clone">
                 <h4>_.clone(collection, [isDeep = false])</h4>
@@ -198,22 +201,22 @@
                 <randomNumber></randomNumber>
             </div>
             <div id="randomAlphabet">
-                <h4>_.randomAlphabet([digit = 1])</h4>
+                <h4>_.randomAlphabet(digit)</h4>
                 <div class="describe">
                     <p>随机大小写字母</p>
                     <h5>参数</h5>
-                    <div>[digit = 1]<em>（Number）</em>：需要随机一串字母的位数</div>
+                    <div>digit<em>（Number）</em>：需要随机一串字母的位数</div>
                     <h5>返回值</h5>
                     <div><em>（String）</em>：返回参数位数的一串随机字母</div>
                 </div>
                 <randomAlphabet></randomAlphabet>
             </div>
             <div id="randomNumberAlphabet">
-                <h4>_.randomNumberAlphabet([digit = 10])</h4>
+                <h4>_.randomNumberAlphabet(digit)</h4>
                 <div class="describe">
                     <p>随机一串大小写字母数字</p>
                     <h5>参数</h5>
-                    <div>[digit = 10]<em>（Number）</em>：需要随机一串的位数</div>
+                    <div>digit<em>（Number）</em>：需要随机一串的位数</div>
                     <h5>返回值</h5>
                     <div><em>（String）</em>：返回参数位数的一串随机大小写字母数字</div>
                 </div>
@@ -476,7 +479,7 @@ import links from './link.vue';
 import state from './state.vue';
 import findKey from './findKey.vue';
 import value from './value.vue';
-import key from './key.vue';
+import findCollection from './findCollection.vue';
 
 
 
@@ -535,7 +538,7 @@ export default {
         state,
         findKey,
         value,
-        key,
+        findCollection,
     },
 }
 </script>
