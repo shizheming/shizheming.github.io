@@ -1,7 +1,7 @@
 /*
 名称：tobe.js
-版本：2.2
-时间：2017.10
+版本：2.3
+时间：2018.03
 
 更新：
 1. 1.0的时候只是把一些觉得实用的常用的功能罗列的写出来，没有提升到抽象层面♥♥♥♥
@@ -15,13 +15,19 @@
     函数参数的命名，一会叫original一会叫object还是会引起误解，那该怎么命名呢，original还是不好，原始的只是这个事物的特性而已，不能代表这个事物，使这个事物称其为这个事物是原因是他的形式，而不是他的特性，你觉得叫collection会不会好很多呢？是的，不过如果有多个collection的时候就难以区分了，所以现在是写了他的状态，比如original，output，虽然我想写全但是太长了
 8. 长数据不用字符串拼接，以免导致数据格式错乱，像那个项目一样♥♥♥♥
 9. 状态添加了设置当前状态♥♥♥♥
-9. 好多策略（比如先显示什么的时候好多if-else）
-10. 时间的控制比较蛋疼，比如我要获取3个月前的时间戳，1几小时前（反正就是要获得某一点的时间戳）
-11. 增加链式操作
+10. 给字符串的数字和数字之间做个转换（只处理最基本的类型，不处理对象）（比如穿1和'1'都可以，当然不是所有都可以，isNumber就不行）♥♥♥♥
+11. 时间的控制比较蛋疼，比如我要获取3个月前的时间戳，1几小时前（反正就是要获得某一点的时间戳）
+12. 增加链式操作
+13. 我发现业务逻辑里面好多地方都是相互交叉的耦合，很多很杂，比如说我在操作这个表格的时候，另外某个地方也要有变化，这就非常繁琐，能不能写个类似中介者的东西，虽然vue的数据绑定和watch很方便
+14. 怎么做到数据提交时候的正确性，也就是提交给后端的数据中不需要出现后端不要的字段，也就是我给自己用的字段也一并提交给后端了，我想到2个路子，一个是请求拿过来的数据我去删到只剩后端需要的字段，另一种是我新建一个后端需要的数据格式
+15. 用多态消灭条件语句
+16. 想想一个写好的函数如何做好很好的扩展，首先它的核心功能是什么，然后能在不改动内部代码的情况下添加功能和状态？？
+17. 写一个把后端过来的数据中的字符串数字变为数字
+18. 递归迭代的时候我怎么知道我在第几层？？全是对象还好办，如果里面有数组怎么办，要不要把数组算一层，因为数组也是对象
 
 
 抽象是哲学的根本特点，代码亦如此。
-（理念和实体）（共相和殊相）（抽象和具象）都是相对的，有辩证性
+（理念和实体）（共相和殊相）（抽象和具象）（现象和本质）（形式和内容）
 
 1. 抽象是什么？
     抽象是具象的反义词
@@ -85,6 +91,8 @@ var factory = function (callback) {
         return output;
     };
     return function (original, iterator, array) {
+        original = processCollection(original);
+        iterator = processFunction(iterator);
         // 不但要处理新的对象还是处理在什么对象上迭代
         var output = callback(original, array || {});
         Object.keys(original).forEach(function (currentValue, index, array) {
@@ -99,7 +107,9 @@ var factory = function (callback) {
 */
 
 var factoryClone = factory(function (original, output) {
-    for (var key in original) output[key] = original[key];
+    _.forEach(original, function (currentValue, key, collection) {
+        output[key] = collection[key];
+    });
     return output;
 });
 
@@ -122,9 +132,10 @@ var objectTransformation =  function (original, output) {
 */
 
 var objectToArr = function (object) {
-    if (Array.isArray(object)) return object;
     var result = [];
-    for (var key in object) result.push(object[key]);
+    _.forEach(object, function (currentValue, key, collection) {
+        result.push(currentValue);
+    });
     return result;
 };
 
@@ -133,10 +144,9 @@ var objectToArr = function (object) {
 */
 
 var arrToObject = function (array) {
-    if (_.isObject(array)) return array;
     var result = {};
-    array.forEach(function (currentValue, index, array) {
-        result[index] = currentValue;
+    _.forEach(array, function (currentValue, key, collection) {
+        result[key] = currentValue;
     });
     return result;
 };
@@ -145,15 +155,26 @@ var arrToObject = function (array) {
     递归
 */
 
-var recursive = function (collection, callback) {
-    var result = [];
-    for (var key in collection) {
-        if (Array.isArray(collection[key]) || _.isObject(collection[key])) {
-            result = result.concat(recursive(collection[key], callback));
+var recursive = function (collection, baseCallback, ObjectCallback) {
+    baseCallback = processFunction(baseCallback);
+    ObjectCallback = processFunction(ObjectCallback);
+    var result = {
+        collection : [],
+        value : [],
+    };
+    _.forEach(collection, function (currentValue, key, collection) {
+        if (Array.isArray(currentValue) || _.isObject(currentValue)) {
+            // 对象值的时候一个断点回调
+            var output = ObjectCallback(currentValue, key, collection);
+            output && result.collection.push(output);
+            var recursiveValue = recursive(currentValue, baseCallback, ObjectCallback);
+            result.value = result.value.concat(recursiveValue.value);
+            result.collection = result.collection.concat(recursiveValue.collection);
         } else {
-            result.push(callback(collection[key]));
+            // 基础值的时候一个断点回调
+            result.value.push(baseCallback(currentValue, key, collection));
         }
-    }
+    });
     return result;
 };
 
@@ -236,7 +257,6 @@ var linkOperation = (function () {
     }.bind(this);
     // 添加
     link.add = function (newElement, oldElement) {
-        if (!_.isFunction(newElement)) return;
         // 缺点在于一次只能插一个值
         var newNode = {
             element : newElement,
@@ -399,7 +419,7 @@ var aggregate = function (index, bl) {
 
 
 
-var _ = {};
+window._ = {};
 
 /*
 ★★★★动词★★★★
@@ -448,12 +468,64 @@ _.forEach = function (collection, iterator) {
     过滤
 ****************/
 
+/*
+    过滤一些特定条件后的数据
+*/
+
 _.filter = function (original, predicate) {
-    original = processCollection(original);
     predicate = processFunction(predicate);
     return objectTransformation(original, factoryNew(original, function (value, key, output) {
         if (predicate(value, key, output)) output[key] = value;
     }));
+};
+
+/*
+    过滤出所有对象的值
+*/
+
+var value = function (original) {
+    return factoryNew(original, function (value, key, output) {
+        output.push(value);
+    }, []);
+};
+_.value = function (collection, isDeep) {
+    return isDeep !== true ? value(collection) : recursive(collection, function (value, key, collection) {
+            return value;
+        }).value;
+};
+
+/*
+    通过value找key
+*/
+
+_.findKey = function (original, value) {
+    for (var key in original) if (original[key] == value) return key;
+};
+
+/*
+    通过值寻找所在的对象
+*/
+
+var findCollection = function (collection, value) {
+    var keyResult = Object.keys(collection).indexOf(String(value.key)) > -1 && collection;
+    var valueResult = _.value(collection).indexOf(value.value || value) > -1 && collection;
+    if (_.isObject(value)) {
+        return Object.keys(value).length === 2 ? keyResult && valueResult && collection[value.key] === value.value && collection : keyResult || valueResult;
+    } else return valueResult;
+};
+_.findCollection = function (collection, value, callback, isDeep) {
+    isDeep = _.isBoolean(callback) ? callback : isDeep;
+    callback = processFunction(callback);
+    if (isDeep !== true) {
+        var result = [];
+        _.forEach(collection, function (currentValue, key, collection) {
+            var output = findCollection(currentValue, value) && callback(currentValue, key, collection) && currentValue;
+            output && result.push(output);
+        });
+        return result;
+    } else return recursive(collection, null, function (currentValue, key, collection) {
+        return findCollection(currentValue, value) && callback(currentValue, key, collection) && currentValue;
+    }).collection;
 };
 
 /****************
@@ -475,6 +547,37 @@ _.debounce = function (func, wait) {
         }
         return func.apply(this, arguments);
     };
+};
+
+/****************
+    映射
+****************/
+
+/*
+    对象通过一张映射表来映射
+    值与值之间的映射
+    这里也要处理下是深映射还是浅映射--那我把深浅的概念提出来吧
+*/
+
+var mappingValue = function (original, form, tag) {
+    tag = tag || '_';
+    // 通过表的key找到obj的key后的值对应表的key的值
+    return objectTransformation(original, factoryClone(original, function (value, key, output) {
+        // 我觉得还是要保留原来的值，不然其他地方用到就蛋疼了
+        if (key in form) {
+            output[tag + key] = form[key][value];
+        }
+    }));
+};
+_.mappingValue = function (collection, form, tag, isDeep) {
+    isDeep = _.isBoolean(tag) ? tag : isDeep;
+    tag = _.isBoolean(tag) ? undefined : tag;
+    if (isDeep !== true) return mappingValue.apply(null, arguments); else {
+        recursive(collection, null, function (value, key, collection) {
+            collection[key] = mappingValue(value, form, tag);
+        });
+    }
+    return collection;
 };
 
 /****************
@@ -535,9 +638,10 @@ _.decorate = function (before, after) {
 _.state = function () {
     // 1. 静态
     // 首先要定义多个状态和状态的顺序
-    var stateAll = [].map.call(arguments, function (currentValue, index, array) {
-        return processFunction(currentValue);
+    var stateAll = [].filter.call(arguments, function (currentValue, index, array) {
+        return _.isFunction(currentValue);
     });
+    if (!stateAll.length) return;
     var link = _.link();
     stateAll.forEach(function (currentValue, index, array) {
         link.add(currentValue);
@@ -554,18 +658,16 @@ _.state = function () {
     };
     var oneByOne = function (isLeft, context) {
         context = _.isBoolean(isLeft) ? context : isLeft;
-        state.element.call(context);
-        isLeft ? void function () {
-            direction();
-        }() : void function () {
-            state = state.next;
-        }();
+        var back = state.element.call(context);
+        isLeft ? direction() : state = state.next;
+        return back;
     };
     // 2. 动态
     // 然后添加一些方法能动态的添加或是删除或是修改状态
     // 添加状态
     var addState = function (newState, oldState) {
-        link.add(newState, oldState);
+        var back = link.add(newState, oldState);
+        if (!back) return;
         // 正序替换
         if (oldState && (state.previous.previous.element === oldState)) state = link.find(newState);
         // 倒序替换
@@ -575,23 +677,29 @@ _.state = function () {
         if (!oldState && state.previous.element === newState) state = link.find(newState);
         // 倒序
         if (!oldState && state.next.next.element === newState) state = link.find(newState); 
+        return back;
     };
     // 替换状态
     var replaceState = function (newState, oldState) {
-        link.replace(newState, oldState);
+        var back = link.replace(newState, oldState);
+        if (!back) return;
         // 更新要替换的前一个或后一个的指针
         if (state.element === oldState) state = link.find(newState);
+        return back;
     };
     // 删除状态
-    var deleteState = function (state) {
+    var deleteState = function (oldState) {
+        if (!_.isFunction(oldState)) return;
         // 这里有个问题就是，有时删除的实体已经变成下一个要运行的实体了，例如我运行1，运行完1后，运行实体变成2，虽然紧接着我删除了2，可下次运行的是时候是运行2的实体，因为之前运行完1后，就更新了运行实体，添加，替换也有这个问题
-        if (state.element === state) direction();
-        link.delete(state);
+        if (state.element === oldState) direction();
+        return link.delete(oldState);
     };
     // 设置当前状态
     var setState = function (newState) {
-        state = link.find(newState);
-        oneByOne();
+        var element = link.find(newState);
+        if (!state) return;
+        state = element;
+        return oneByOne();
     };
     return {
         currState : oneByOne,
@@ -614,10 +722,8 @@ _.randomNumber = function (digit, digit2) {
     switch (arguments.length) {
         case 0 : return random();
         case 1 : 
-            if (!_.isNumber(digit)) return random();
             return Math.floor((Math.random() + '').replace(/\.0+/, '.') * Math.pow(10, digit));
         default : 
-            if (!_.isNumber(digit) || !_.isNumber(digit2)) return random();
             return parseInt(digit + Math.random() * (digit2 - digit));
     }
 };
@@ -627,7 +733,6 @@ _.randomNumber = function (digit, digit2) {
 */
 
 _.randomAlphabet = function (digit) {
-    digit = _.isNumber(digit) ? digit : 1;
     var array = [];
     for (var i = 0; i < digit; i++) array.push(_.randomNumber(0, 25));
     //大写字母'A'的ASCII是65,A~Z的ASCII码就是65 + 0~25;然后调用String.fromCharCode()
@@ -648,10 +753,9 @@ _.randomAlphabet = function (digit) {
 */
 
 _.randomNumberAlphabet = function (digit) {
-    digit = _.isNumber(digit) ? digit : 10;
     var number = _.randomNumber(0, digit);
     var string = _.randomNumber(number) + _.randomAlphabet(digit - number);
-    return _.shuffle(string.split('')).join('');
+    return _.isNaN(number) ? NaN : _.shuffle(string.split('')).join('');
 };
 
 /*
@@ -662,11 +766,13 @@ _.randomColor = function (saturation, light) {
     saturation = _.isString(saturation) ? saturation : '50%';
     light = _.isString(light) ? light : '50%';
     if (arguments.length == 1) light = saturation;
+    var hsl = ['hsl(', ')'];
+    hsl.splice(1, 0, [_.randomNumber(0, 360), saturation, light].join(','));
     /*var r = (0, 60)
     var r = (300, 360)
     var g = (60, 180)
     var b = (180, 300);*/
-    return 'hsl(' + [_.randomNumber(0, 360), saturation, light].join(',') + ')';
+    return hsl.join('');
 };
 
 
@@ -841,7 +947,15 @@ _.link = function () {
     newLink.head.next = newLink.tail;
     newLink.head.previous = newLink.tail;
     // 继承方法
-    return _.extend(newLink, linkOperation);
+    newLink = _.extend(newLink, linkOperation);
+    // 初始化添加链表元素
+    var allLink = [].filter.call(arguments, function (currentValue, index, array) {
+        return _.isFunction(currentValue);
+    });
+    allLink.forEach(function (currentValue, index, array) {
+        newLink.add(currentValue);
+    });
+    return newLink;
 };
 
 
@@ -854,83 +968,12 @@ _.link = function () {
 
 
 
-/****************
-    寻找(过滤)
-****************/
-/*
-    通过value找key
-*/
-_.findKey = function (obj, value) {
-    for (var key in obj) if (obj[key] == value) return key;
-};
-/*
-    通过ke或是val寻找当前所在对象
-    这里有个问题就是，当里面嵌套的key和val一样的时候，就有些蛋疼了，他给了我里面的一个对象，我要的是外面一层的对象，还没有遍历到，所以要改进下，弄个广度优先遍历的
-    这个要改，我想了下就是先去维度吧，把他变成一维的，然后再在里面找，要全部找一遍，因为有可能有一样的，把找到的全部返回给外面，有具体业务逻辑决定
-    我加个是否需要深度查找不就好了么，
-*/
-_.getObj = function () {
-    // 现在有2种情况
-    var arr = [function oneVal (obj, one, depth, result) {
-        // 至少深入一层寻找
-        // 维度
-        var dimension = 1;
-        // 2.只知道key或只知道val
-        for (var oldKey in obj) {
-            if (typeof obj[oldKey] === 'object') {
-                if (depth) {
-                    if (oldKey == one) return obj;
-                    result = oneVal(obj[oldKey], one, depth, result);
-                    if (result) return result;
-                } else {
-                    if (dimension === 1) {
-                        // 浅寻找不能用递归了，还是手动for循环，因为我知道要循环2层
-                        if (one in obj[oldKey]) return obj[oldKey];
-                    }
-                }
-            } else if (one in obj) return obj; else if(one == obj[oldKey]) return obj;
-        }
-        // 增加维度
-        dimension++;
 
-    }, function twoVal (obj, newKey, val, depth, result) {
-        // 至少深入一层寻找
-        // 维度
-        var dimension = dimension || 1;
-        // 1.知道key和val
-        for (var oldKey in obj) {
-            if (typeof obj[oldKey] === 'object') {
-                if (depth) {
-                    result = twoVal(obj[oldKey], newKey, val, depth, result);
-                    if (result) return result;
-                } else {
-                    if (dimension === 1) {
-                        // 浅寻找不能用递归了，还是手动for循环，因为我知道要循环2层
-                        if (newKey in obj[oldKey] && val == obj[oldKey][newKey]) return obj[oldKey];
-                    }
-                }
-            } else if (obj[newKey] == val) return obj;
-        }
-        // 增加维度
-        dimension++;
-    }];
-    return !_.isBoolean(arguments[arguments.length - 1]) ? arr[arguments.length % 2].apply(null, arguments) : arr[arguments.length % 3].apply(null, arguments);
-};
-/*
-    寻找所有的对象的值
-*/
-var value = function (original) {
-    return factoryNew(original, function (value, key, output) {
-        output.push(value);
-    }, []);
-};
-_.value = function (object, isDeep) {
-    if (isDeep !== true) return value(object); else {
-        return recursive(object, function (currentValue) {
-            return currentValue;
-        });
-    }
-};
+
+
+
+
+
 /*
     过滤false的值，都返回真值
 */
@@ -962,21 +1005,9 @@ _.invert = function (oldObj, arr) {
         surplus(key) ? newObj[key] = val : newObj[val] = key;
     });
 };
-/*
-    对象通过一张映射表来映射
-    值与值之间的映射
-    这里也要处理下是深映射还是浅映射--那我把深浅的概念提出来吧
-*/
-_.paraVal = function (oldObj, form) {
-    // 通过表的key找到obj的key后的值对应表的key的值
-    return factoryClone(oldObj, function (val, key, newObj) {
-        if (_.isObject(newObj[key]) && newObj[key] !== null) _.paraVal(newObj[key], form); else {
-            if (key in form) {
-                newObj[key] = form[key][val];
-            }
-        }
-    });
-};
+
+
+
 /*
     映射key
 */
@@ -1269,4 +1300,4 @@ _.change = function () {
 };
 
 
-export default _;
+// export default _;

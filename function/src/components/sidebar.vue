@@ -8,9 +8,15 @@
         <h3>过滤</h3>
         <ul>
             <li><a href="#filter">_.filter</a></li>
+            <li><a href="#filterFalse">_.filterFalse</a></li>
             <li><a href="#findKey">_.findKey</a></li>
             <li><a href="#value">_.value</a></li>
         	<li><a href="#findCollection">_.findCollection</a></li>
+        </ul>
+        <h3>映射</h3>
+        <ul>
+            <li><a href="#mappingValue">_.mappingValue</a></li>
+            <li><a href="#invert">_.invert</a></li>
         </ul>
         <h3>克隆</h3>
         <ul>
