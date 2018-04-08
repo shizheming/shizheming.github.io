@@ -16,7 +16,12 @@
         <h3>映射</h3>
         <ul>
             <li><a href="#mappingValue">_.mappingValue</a></li>
+            <li><a href="#mappingKey">_.mappingKey</a></li>
             <li><a href="#invert">_.invert</a></li>
+        </ul>
+        <h3>形式</h3>
+        <ul>
+            <li><a href="#pairs">_.pairs</a></li>
         </ul>
         <h3>克隆</h3>
         <ul>

@@ -77,7 +77,7 @@
                 <findCollection></findCollection>
             </div>
             <div id="mappingValue">
-                <h4>_.mappingValue(collection, form, [tag = '_'], [isDeep = false])</h4>
+                <h4>_.mappingValue(collection, form, [tag = '_'], [isDeep = false], [isDestroy = false])</h4>
                 <div class="describe">
                     <p>把对象的值通过映射表进行转换</p>
                     <h5>参数</h5>
@@ -85,10 +85,26 @@
                     <div>form<em>（Array || Object）</em>：映射表</div>
                     <div>[tag = '_']<em>（String）</em>：映射后新值的标记</div>
                     <div>[isDeep = false]<em>（Boolean）</em>：是否深映射</div>
+                    <div>[isDestroy = false]<em>（Boolean）</em>：是否把原来的键值对销毁</div>
                     <h5>返回值</h5>
                     <div><em>（Array）</em>：返回映射完的对象合集</div>
                 </div>
                 <mappingValue></mappingValue>
+            </div>
+            <div id="mappingKey">
+                <h4>_.mappingKey(collection, form, [tag = '_'], [isDeep = false], [isDestroy = false])</h4>
+                <div class="describe">
+                    <p>把对象的键通过映射表进行转换</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要映射的对象</div>
+                    <div>form<em>（Array || Object）</em>：映射表</div>
+                    <div>[tag = '_']<em>（String）</em>：映射后新值的标记</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否深映射</div>
+                    <div>[isDestroy = false]<em>（Boolean）</em>：是否把原来的键值对销毁</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回映射完的对象合集</div>
+                </div>
+                <mappingKey></mappingKey>
             </div>
             <div id="invert">
                 <h4>_.invert(collection, [array])</h4>
@@ -101,6 +117,17 @@
                     <div><em>（Array）</em>：返回互换后的对象合集</div>
                 </div>
                 <invert></invert>
+            </div>
+            <div id="pairs">
+                <h4>_.pairs(collection)</h4>
+                <div class="describe">
+                    <p>把一个集合转换为一个[key, value]形式的数组</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要转换的对象</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回转换后的合集</div>
+                </div>
+                <pairs></pairs>
             </div>
             <div id="clone">
                 <h4>_.clone(collection, [isDeep = false])</h4>
@@ -519,7 +546,9 @@ import value from './value.vue';
 import findCollection from './findCollection.vue';
 import filterFalse from './filterFalse.vue';
 import mappingValue from './mappingValue.vue';
+import mappingKey from './mappingKey.vue';
 import invert from './invert.vue';
+import pairs from './pairs.vue';
 
 
 
@@ -582,7 +611,9 @@ export default {
         findCollection,
         filterFalse,
         mappingValue,
+        mappingKey,
         invert,
+        pairs,
     },
 }
 </script>
@@ -592,10 +623,10 @@ export default {
 .name{
     font-size:30px;
     position:fixed;
-    width:100%;
     top:0;
     height:60px;
     line-height:60px;
+    width:300px;
 }
 .ssss{
     font-family:'Microsoft YaHei';
