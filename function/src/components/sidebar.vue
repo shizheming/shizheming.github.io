@@ -27,6 +27,14 @@
         <ul>
             <li><a href="#clone">_.clone</a></li>
         </ul>
+        <h3>去重</h3>
+        <ul>
+            <li><a href="#uniq">_.uniq</a></li>
+        </ul>
+        <h3>打乱</h3>
+        <ul>
+            <li><a href="#shuffle">_.shuffle</a></li>
+        </ul>
         <h3>消抖</h3>
         <ul>
             <li><a href="#debounce">_.debounce</a></li>

@@ -1,6 +1,7 @@
 <template>
     <div class="ssss">
-        <div class="name">隐德莱希</div>
+        <!-- 隐德莱希 -->
+        <div class="name">tobe</div>
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
@@ -142,6 +143,28 @@
                     <div><em>（Array || Object）</em>：返回复制出的新对象</div>
                 </div>
                 <clone></clone>
+            </div>
+            <div id="uniq">
+                <h4>_.uniq(collection)</h4>
+                <div class="describe">
+                    <p>去重</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要复制的对象</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回去重后的新对象</div>
+                </div>
+                <uniq></uniq>
+            </div>
+            <div id="shuffle">
+                <h4>_.shuffle(collection)</h4>
+                <div class="describe">
+                    <p>打乱顺序</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要打乱顺序的对象</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回打乱顺序后的新对象</div>
+                </div>
+                <shuffle></shuffle>
             </div>
             <div id="debounce">
                 <h4>_.debounce(func, wait)</h4>
@@ -549,6 +572,8 @@ import mappingValue from './mappingValue.vue';
 import mappingKey from './mappingKey.vue';
 import invert from './invert.vue';
 import pairs from './pairs.vue';
+import uniq from './uniq.vue';
+import shuffle from './shuffle.vue';
 
 
 
@@ -614,6 +639,8 @@ export default {
         mappingKey,
         invert,
         pairs,
+        uniq,
+        shuffle,
     },
 }
 </script>
