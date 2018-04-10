@@ -35,6 +35,11 @@
         <ul>
             <li><a href="#shuffle">_.shuffle</a></li>
         </ul>
+        <h3>删除</h3>
+        <ul>
+            <li><a href="#removeValue">_.removeValue</a></li>
+            <li><a href="#removeKey">_.removeKey</a></li>
+        </ul>
         <h3>消抖</h3>
         <ul>
             <li><a href="#debounce">_.debounce</a></li>

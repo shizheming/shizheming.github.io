@@ -7,9 +7,9 @@
             <div id="forEach">
                 <h4>_.forEach(collection, iterator)</h4>
                 <div class="describe">
-                    <p>迭代一个对象</p>
+                    <p>迭代一个集合</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要迭代的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要迭代的集合</div>
                     <div>iterator<em>（Function）</em>：迭代器</div>
                     <h5>返回值</h5>
                     <div><em>（undefined）</em>：返回undefined</div>
@@ -19,12 +19,12 @@
             <div id="filter">
                 <h4>_.filter(collection, predicate)</h4>
                 <div class="describe">
-                    <p>过滤一个对象</p>
+                    <p>过滤一个集合</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要过滤的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要过滤的集合</div>
                     <div>predicate<em>（Function）</em>：迭代器</div>
                     <h5>返回值</h5>
-                    <div><em>（Array || Object）</em>：返回过滤后的对象</div>
+                    <div><em>（Array || Object）</em>：返回过滤后的新集合</div>
                 </div>
                 <filters></filters>
             </div>
@@ -33,138 +33,177 @@
                 <div class="describe">
                     <p>过滤假值</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要过滤的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要过滤的集合</div>
                     <h5>返回值</h5>
-                    <div><em>（Array || Object）</em>：返回过滤后的对象</div>
+                    <div><em>（Array || Object）</em>：返回过滤后的新集合</div>
                 </div>
                 <filterFalse></filterFalse>
             </div>
             <div id="findKey">
                 <h4>_.findKey(collection, value)</h4>
                 <div class="describe">
-                    <p>通过对象的value寻找key</p>
+                    <p>通过集合的值寻找键</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
-                    <div>value<em>（String || Number || Boolean）</em>：通过值寻找</div>
+                    <div>collection<em>（Array || Object）</em>：需要查找的集合</div>
+                    <div>value<em>（String || Number || Boolean）</em>：需要通过值来查找</div>
                     <h5>返回值</h5>
-                    <div><em>（String）</em>：返回值对应的key</div>
+                    <div><em>（String）</em>：返回值对应的键</div>
                 </div>
                 <findKey></findKey>
             </div>
             <div id="value">
                 <h4>_.value(collection, [isDeep = false])</h4>
                 <div class="describe">
-                    <p>把对象的值全部拿出来</p>
+                    <p>输出集合的值</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否深查找</div>
+                    <div>collection<em>（Array || Object）</em>：需要查找的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度查找</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回值对应值的数组合集</div>
+                    <div><em>（Array）</em>：返回值的新数组合集</div>
                 </div>
                 <value></value>
             </div>
             <div id="findCollection">
                 <h4>_.findCollection(collection, value, [callback = isDeep], [isDeep = false])</h4>
                 <div class="describe">
-                    <p>通过值和筛选条件找到想要的对象</p>
+                    <p>通过键值和筛选条件找到想要的集合</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：查找的对象</div>
-                    <div>value<em>（String || Number || Boolean || Object）</em>：通过这个值查找</div>
-                    <div>[callback = isDeep]<em>（Function）</em>：添加筛选的条件</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否深查找</div>
+                    <div>collection<em>（Array || Object）</em>：需要查找的集合</div>
+                    <div>value<em>（String || Number || Boolean || Object）</em>：需要通过键值来查找</div>
+                    <div>[callback = isDeep]<em>（Function）</em>：需要添加的筛选条件来查找</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度查找</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回一个数组合集</div>
+                    <div><em>（Array）</em>：返回新的数组合集</div>
+                    <h5>ps</h5>
+                    <div>下面的例子都只是找到一个值，可能会找到多个值</div>
                 </div>
                 <findCollection></findCollection>
             </div>
             <div id="mappingValue">
                 <h4>_.mappingValue(collection, form, [tag = '_'], [isDeep = false], [isDestroy = false])</h4>
                 <div class="describe">
-                    <p>把对象的值通过映射表进行转换</p>
+                    <p>把集合的值通过映射表进行映射</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要映射的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要映射的集合</div>
                     <div>form<em>（Array || Object）</em>：映射表</div>
-                    <div>[tag = '_']<em>（String）</em>：映射后新值的标记</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否深映射</div>
-                    <div>[isDestroy = false]<em>（Boolean）</em>：是否把原来的键值对销毁</div>
+                    <div>[tag = '_']<em>（String）</em>：映射后新值键的标记符号</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度映射</div>
+                    <div>[isDestroy = false]<em>（Boolean）</em>：是否需要把原来的键值对销毁</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回映射完的对象合集</div>
+                    <div><em>（Array）</em>：返回映射完的新合集</div>
+                    <h5>ps</h5>
+                    <div>下面的例子映射表只映射了一个值，可以同时映射多个值</div>
                 </div>
                 <mappingValue></mappingValue>
             </div>
             <div id="mappingKey">
                 <h4>_.mappingKey(collection, form, [tag = '_'], [isDeep = false], [isDestroy = false])</h4>
                 <div class="describe">
-                    <p>把对象的键通过映射表进行转换</p>
+                    <p>把集合的键通过映射表进行映射</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要映射的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要映射的集合</div>
                     <div>form<em>（Array || Object）</em>：映射表</div>
-                    <div>[tag = '_']<em>（String）</em>：映射后新值的标记</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否深映射</div>
-                    <div>[isDestroy = false]<em>（Boolean）</em>：是否把原来的键值对销毁</div>
+                    <div>[tag = '_']<em>（String）</em>：映射后新键的标记符号</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度映射</div>
+                    <div>[isDestroy = false]<em>（Boolean）</em>：是否需要把原来的键值对销毁</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回映射完的对象合集</div>
+                    <div><em>（Array）</em>：返回映射完的新合集</div>
+                    <h5>ps</h5>
+                    <div>下面的例子映射表只映射了一个键，可以同时映射多个键</div>
                 </div>
                 <mappingKey></mappingKey>
             </div>
             <div id="invert">
                 <h4>_.invert(collection, [array])</h4>
                 <div class="describe">
-                    <p>键值对互换</p>
+                    <p>键值互换</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要互换的对象</div>
-                    <div>[array]<em>（Array）</em>：不需要互换的key</div>
+                    <div>collection<em>（Array || Object）</em>：需要互换的集合</div>
+                    <div>[array]<em>（Array）</em>：不需要互换的键</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回互换后的对象合集</div>
+                    <div><em>（Object）</em>：返回互换后的新对象集合</div>
+                    <h5>ps</h5>
+                    <div>下面的例子中，不需要互换的键只用了一个，可以同时提添加多个不需要互换的键</div>
                 </div>
                 <invert></invert>
             </div>
             <div id="pairs">
                 <h4>_.pairs(collection)</h4>
                 <div class="describe">
-                    <p>把一个集合转换为一个[key, value]形式的数组</p>
+                    <p>把一个集合转换为一个[键, 值]形式的数组集合</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要转换的对象</div>
+                    <div>collection<em>（Array || Object）</em>：需要转换的集合</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回转换后的合集</div>
+                    <div><em>（Array）</em>：返回转换后的新数组合集</div>
                 </div>
                 <pairs></pairs>
             </div>
             <div id="clone">
                 <h4>_.clone(collection, [isDeep = false])</h4>
                 <div class="describe">
-                    <p>复制对象</p>
+                    <p>复制集合</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array || Object）</em>：需要复制的对象</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深克隆</div>
-                    <h5>PS</h5>
-                    <div>不复制访问器属性</div>
+                    <div>collection<em>（Array || Object）</em>：需要复制的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度克隆</div>
                     <h5>返回值</h5>
-                    <div><em>（Array || Object）</em>：返回复制出的新对象</div>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>不复制访问器属性</div>
+                    <div>函数会变null</div>
                 </div>
                 <clone></clone>
             </div>
             <div id="uniq">
                 <h4>_.uniq(collection)</h4>
                 <div class="describe">
-                    <p>去重</p>
+                    <p>集合去重</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array）</em>：需要复制的对象</div>
+                    <div>collection<em>（Array）</em>：需要去重的集合</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回去重后的新对象</div>
+                    <div><em>（Array）</em>：返回新集合</div>
                 </div>
                 <uniq></uniq>
             </div>
             <div id="shuffle">
                 <h4>_.shuffle(collection)</h4>
                 <div class="describe">
-                    <p>打乱顺序</p>
+                    <p>打乱集合顺序</p>
                     <h5>参数</h5>
-                    <div>collection<em>（Array）</em>：需要打乱顺序的对象</div>
+                    <div>collection<em>（Array）</em>：需要打乱顺序的集合</div>
                     <h5>返回值</h5>
-                    <div><em>（Array）</em>：返回打乱顺序后的新对象</div>
+                    <div><em>（Array）</em>：返回新集合</div>
                 </div>
                 <shuffle></shuffle>
+            </div>
+            <div id="removeValue">
+                <h4>_.removeValue(collection, deleteCollection, [isDeep = false])</h4>
+                <div class="describe">
+                    <p>从集合中删除值</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要进行删除处理的集合</div>
+                    <div>deleteCollection<em>（Array）</em>：需要删除值的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度删除</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面例子中只删除了一个值，可以同时删除多个值</div>
+                </div>
+                <removeValue></removeValue>
+            </div>
+            <div id="removeKey">
+                <h4>_.removeKey(collection, deleteCollection, [isDeep = false])</h4>
+                <div class="describe">
+                    <p>从集合中删除键</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要进行删除处理的集合</div>
+                    <div>deleteCollection<em>（Array）</em>：需要删除键的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度删除</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面例子中只删除了一个键，可以同时删除多个键</div>
+                </div>
+                <removeKey></removeKey>
             </div>
             <div id="debounce">
                 <h4>_.debounce(func, wait)</h4>
@@ -439,10 +478,10 @@
             <div id="isEqual">
                 <h4>_.isEqual(collection1, collection2)</h4>
                 <div class="describe">
-                    <p>判断2个对象是否字面上的相等</p>
+                    <p>判断2个集合是否字面上的相等</p>
                     <h5>参数</h5>
-                    <div>collection1<em>（Object || Array）</em>：需要对比的第一个值</div>
-                    <div>collection2<em>（Object || Array）</em>：需要对比的第二个值</div>
+                    <div>collection1<em>（Object || Array）</em>：需要对比的第一个集合</div>
+                    <div>collection2<em>（Object || Array）</em>：需要对比的第二个集合</div>
                     <h5>返回值</h5>
                     <div><em>（Boolean）</em>：返回布尔值</div>
                 </div>
@@ -574,6 +613,8 @@ import invert from './invert.vue';
 import pairs from './pairs.vue';
 import uniq from './uniq.vue';
 import shuffle from './shuffle.vue';
+import removeValue from './removeValue.vue';
+import removeKey from './removeKey.vue';
 
 
 
@@ -641,6 +682,8 @@ export default {
         pairs,
         uniq,
         shuffle,
+        removeValue,
+        removeKey,
     },
 }
 </script>
