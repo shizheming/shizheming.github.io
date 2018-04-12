@@ -5,12 +5,13 @@
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
-                <h4>_.forEach(collection, iterator)</h4>
+                <h4>_.forEach(collection, iterator, [isDeep = false])</h4>
                 <div class="describe">
                     <p>迭代一个集合</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要迭代的集合</div>
                     <div>iterator<em>（Function）</em>：迭代器</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度迭代</div>
                     <h5>返回值</h5>
                     <div><em>（undefined）</em>：返回undefined</div>
                 </div>
@@ -54,7 +55,7 @@
             <div id="value">
                 <h4>_.value(collection, [isDeep = false])</h4>
                 <div class="describe">
-                    <p>输出集合的值</p>
+                    <p>输出集合的基础类型值</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要查找的集合</div>
                     <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度查找</div>
@@ -204,6 +205,18 @@
                     <div>下面例子中只删除了一个键，可以同时删除多个键</div>
                 </div>
                 <removeKey></removeKey>
+            </div>
+            <div id="toNumber">
+                <h4>_.toNumber(collection, [isDeep = false])</h4>
+                <div class="describe">
+                    <p>把集合中字符串数字变成数字</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要转换的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度转换</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                </div>
+                <toNumber></toNumber>
             </div>
             <div id="debounce">
                 <h4>_.debounce(func, wait)</h4>
@@ -615,6 +628,7 @@ import uniq from './uniq.vue';
 import shuffle from './shuffle.vue';
 import removeValue from './removeValue.vue';
 import removeKey from './removeKey.vue';
+import toNumber from './toNumber.vue';
 
 
 
@@ -684,6 +698,7 @@ export default {
         shuffle,
         removeValue,
         removeKey,
+        toNumber
     },
 }
 </script>

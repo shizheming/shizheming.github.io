@@ -44,6 +44,10 @@
         <ul>
             <li><a href="#debounce">_.debounce</a></li>
         </ul>
+        <h3>数字化</h3>
+        <ul>
+            <li><a href="#toNumber">_.toNumber</a></li>
+        </ul>
         <h3>次数</h3>
         <ul>
             <li><a href="#once">_.once</a></li>
