@@ -5,13 +5,12 @@
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
-                <h4>_.forEach(collection, iterator, [isDeep = false])</h4>
+                <h4>_.forEach(collection, iterator)</h4>
                 <div class="describe">
                     <p>迭代一个集合</p>
                     <h5>参数</h5>
                     <div>collection<em>（Array || Object）</em>：需要迭代的集合</div>
                     <div>iterator<em>（Function）</em>：迭代器</div>
-                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度迭代</div>
                     <h5>返回值</h5>
                     <div><em>（undefined）</em>：返回undefined</div>
                 </div>
@@ -176,6 +175,57 @@
                 </div>
                 <shuffle></shuffle>
             </div>
+            <div id="chunk">
+                <h4>_.chunk(collection, size)</h4>
+                <div class="describe">
+                    <p>已长度来分组集合中元素</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要分组的集合</div>
+                    <div>size<em>（Number）</em>：需要根据的长度个数</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回新集合</div>
+                </div>
+                <chunk></chunk>
+            </div>
+            <div id="union">
+                <h4>_.union(collection...)</h4>
+                <div class="describe">
+                    <p>并集</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要并集的集合</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面的例子只合并了2个集合，可以多个集合</div>
+                </div>
+                <union></union>
+            </div>
+            <div id="intersection">
+                <h4>_.intersection(collection...)</h4>
+                <div class="describe">
+                    <p>交集</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要交集的集合</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面的例子只想交了2个集合，可以多个集合</div>
+                </div>
+                <intersection></intersection>
+            </div>
+            <div id="complement">
+                <h4>_.complement(collection...)</h4>
+                <div class="describe">
+                    <p>补集</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array）</em>：需要补集的集合</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面的例子只填补了2个集合，可以多个集合</div>
+                </div>
+                <complement></complement>
+            </div>
             <div id="removeValue">
                 <h4>_.removeValue(collection, deleteCollection, [isDeep = false])</h4>
                 <div class="describe">
@@ -206,6 +256,18 @@
                 </div>
                 <removeKey></removeKey>
             </div>
+            <div id="trim">
+                <h4>_.trim(collection, [isDeep = false])</h4>
+                <div class="describe">
+                    <p>从集合的值中删除空格</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要进行删除处理的集合</div>
+                    <div>[isDeep = false]<em>（Boolean）</em>：是否需要深度删除</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                </div>
+                <trim></trim>
+            </div>
             <div id="toNumber">
                 <h4>_.toNumber(collection, [isDeep = false])</h4>
                 <div class="describe">
@@ -217,6 +279,18 @@
                     <div><em>（Array || Object）</em>：返回新集合</div>
                 </div>
                 <toNumber></toNumber>
+            </div>
+            <div id="getValue">
+                <h4>_.getValue(collection, name)</h4>
+                <div class="describe">
+                    <p>获取集合中的某个值</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要获取值来源的集合</div>
+                    <div>name<em>（String）</em>：需要查找的属性名</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回属性值</div>
+                </div>
+                <getValue></getValue>
             </div>
             <div id="debounce">
                 <h4>_.debounce(func, wait)</h4>
@@ -629,6 +703,12 @@ import shuffle from './shuffle.vue';
 import removeValue from './removeValue.vue';
 import removeKey from './removeKey.vue';
 import toNumber from './toNumber.vue';
+import getValue from './getValue.vue';
+import chunk from './chunk.vue';
+import union from './union.vue';
+import intersection from './intersection.vue';
+import complement from './complement.vue';
+import trim from './trim.vue';
 
 
 
@@ -698,7 +778,13 @@ export default {
         shuffle,
         removeValue,
         removeKey,
-        toNumber
+        toNumber,
+        getValue,
+        chunk,
+        union,
+        intersection,
+        complement,
+        trim,
     },
 }
 </script>

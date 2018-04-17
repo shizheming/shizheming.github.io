@@ -35,10 +35,26 @@
         <ul>
             <li><a href="#shuffle">_.shuffle</a></li>
         </ul>
+        <h3>分组</h3>
+        <ul>
+            <li><a href="#chunk">_.chunk</a></li>
+        </ul>
+        <h3>集合</h3>
+        <ul>
+            <li><a href="#union">_.union</a></li>
+            <li><a href="#intersection">_.intersection</a></li>
+            <li><a href="#complement">_.complement</a></li>
+        </ul>
+
+        <h3>取值</h3>
+        <ul>
+            <li><a href="#getValue">_.getValue</a></li>
+        </ul>
         <h3>删除</h3>
         <ul>
             <li><a href="#removeValue">_.removeValue</a></li>
             <li><a href="#removeKey">_.removeKey</a></li>
+            <li><a href="#trim">_.trim</a></li>
         </ul>
         <h3>消抖</h3>
         <ul>
