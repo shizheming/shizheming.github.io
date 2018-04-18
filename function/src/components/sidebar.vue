@@ -60,9 +60,10 @@
         <ul>
             <li><a href="#debounce">_.debounce</a></li>
         </ul>
-        <h3>数字化</h3>
+        <h3>数字</h3>
         <ul>
             <li><a href="#toNumber">_.toNumber</a></li>
+            <li><a href="#fillZero">_.fillZero</a></li>
         </ul>
         <h3>次数</h3>
         <ul>
@@ -77,6 +78,10 @@
         <h3>状态</h3>
         <ul>
             <li><a href="#state">_.state</a></li>
+        </ul>
+        <h3>金钱</h3>
+        <ul>
+            <li><a href="#money">_.money</a></li>
         </ul>
         <h3>随机</h3>
         <ul>

@@ -280,6 +280,28 @@
                 </div>
                 <toNumber></toNumber>
             </div>
+            <div id="fillZero">
+                <h4>_.fillZero(value)</h4>
+                <div class="describe">
+                    <p>把字符串补零</p>
+                    <h5>参数</h5>
+                    <div>value<em>（String）</em>：需要补零的值</div>
+                    <h5>返回值</h5>
+                    <div><em>（String）</em>：返回新值</div>
+                </div>
+                <fillZero></fillZero>
+            </div>
+            <div id="money">
+                <h4>_.money(value)</h4>
+                <div class="describe">
+                    <p>以金钱的格式显示数字</p>
+                    <h5>参数</h5>
+                    <div>value<em>（String）</em>：需要以金钱的格式显示数字的值</div>
+                    <h5>返回值</h5>
+                    <div><em>（String）</em>：返回新值</div>
+                </div>
+                <money></money>
+            </div>
             <div id="getValue">
                 <h4>_.getValue(collection, name)</h4>
                 <div class="describe">
@@ -709,6 +731,8 @@ import union from './union.vue';
 import intersection from './intersection.vue';
 import complement from './complement.vue';
 import trim from './trim.vue';
+import fillZero from './fillZero.vue';
+import money from './money.vue';
 
 
 
@@ -785,6 +809,8 @@ export default {
         intersection,
         complement,
         trim,
+        fillZero,
+        money,
     },
 }
 </script>
