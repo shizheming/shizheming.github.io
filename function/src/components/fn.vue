@@ -226,6 +226,19 @@
                 </div>
                 <complement></complement>
             </div>
+            <div id="assign">
+                <h4>_.assign(collection...)</h4>
+                <div class="describe">
+                    <p>并集</p>
+                    <h5>参数</h5>
+                    <div>collection<em>（Array || Object）</em>：需要并集的集合</div>
+                    <h5>返回值</h5>
+                    <div><em>（Array || Object）</em>：返回新集合</div>
+                    <h5>ps</h5>
+                    <div>下面的例子只合并了2个集合，可以多个集合</div>
+                </div>
+                <!-- <assign></assign> -->
+            </div>
             <div id="removeValue">
                 <h4>_.removeValue(collection, deleteCollection, [isDeep = false])</h4>
                 <div class="describe">

@@ -44,6 +44,7 @@
             <li><a href="#union">_.union</a></li>
             <li><a href="#intersection">_.intersection</a></li>
             <li><a href="#complement">_.complement</a></li>
+            <li><a href="#assign">_.assign</a></li>
         </ul>
 
         <h3>取值</h3>
