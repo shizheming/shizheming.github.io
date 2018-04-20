@@ -1,81 +1,28 @@
 /*
 名称：tobe.js
-版本：2.3
-时间：2018.03
+版本：2.4
+时间：2018.04
 
 更新：
 1. 1.0的时候只是把一些觉得实用的常用的功能罗列的写出来，没有提升到抽象层面♥♥♥♥
 2. 修改对象都要返回新的对象，不要在原有的对象上改♥♥♥♥
 3. 处理数组和对象一种是策略，都当对象处理，最后分离，因为他变成了统一质料♥♥♥♥
-4. 功能还是保持单一性，就像那个复制，我有加了复制之后的过滤，这是2个不同的功能，不需要耦合在一起♥♥♥♥
 5. 函数参数容错处理♥♥♥♥一开始我把容错写在私有函数里了，这样对外函数体就感觉比较干净点，但觉得判断的容错逻辑应该独立出来，不和具体的私有功能函数逻辑耦合在一起，做到职责单一
 6. 解决对对象深度循环操作的问题----
-    这样做，一开始想把它抽不来，后来发现没有东西抽出来，直接就递归了，现在我想把浅的深的分开来函数处理，最后在合起来，我不想把深浅耦合在一起♥♥♥♥
-7. 严谨命名变量名，函数名，函数参数名，属性名的命名，也是建立体系的一种训练♥♥♥♥
-    函数参数的命名，一会叫original一会叫object还是会引起误解，那该怎么命名呢，original还是不好，原始的只是这个事物的特性而已，不能代表这个事物，使这个事物称其为这个事物是原因是他的形式，而不是他的特性，你觉得叫collection会不会好很多呢？是的，不过如果有多个collection的时候就难以区分了，所以现在是写了他的状态，比如original，output，虽然我想写全但是太长了
-8. 长数据不用字符串拼接，以免导致数据格式错乱，像那个项目一样♥♥♥♥
-9. 状态添加了设置当前状态♥♥♥♥
-10. 给字符串的数字和数字之间做个转换（只处理最基本的类型，不处理对象）（比如穿1和'1'都可以，当然不是所有都可以，isNumber就不行）♥♥♥♥
-11. 时间的控制比较蛋疼，比如我要获取3个月前的时间戳，1几小时前（反正就是要获得某一点的时间戳）
-12. 增加链式操作
-13. 我发现业务逻辑里面好多地方都是相互交叉的耦合，很多很杂，比如说我在操作这个表格的时候，另外某个地方也要有变化，这就非常繁琐，能不能写个类似中介者的东西，虽然vue的数据绑定和watch很方便
-14. 怎么做到数据提交时候的正确性，也就是提交给后端的数据中不需要出现后端不要的字段，也就是我给自己用的字段也一并提交给后端了，我想到2个路子，一个是请求拿过来的数据我去删到只剩后端需要的字段，另一种是我新建一个后端需要的数据格式
-15. 用多态消灭条件语句
-16. 想想一个写好的函数如何做好很好的扩展，首先它的核心功能是什么，然后能在不改动内部代码的情况下添加功能和状态？？
-17. 写一个把后端过来的数据中的字符串数字变为数字
-18. 递归迭代的时候我怎么知道我在第几层？？全是对象还好办，如果里面有数组怎么办，要不要把数组算一层，因为数组也是对象
+    这样做，一开始想把它抽出来，后来发现没有东西抽出来，直接就递归了，现在我想把浅的深的分开来函数处理，最后在合起来，我不想把深浅耦合在一起♥♥♥♥
 
+8. 长数据不用字符串拼接，以免导致数据格式错乱，像那个项目一样♥♥♥♥
+
+10. 给字符串的数字和数字之间做个转换（只处理最基本的类型，不处理对象）（比如传1和'1'都可以，当然不是所有都可以，isNumber就不行）♥♥♥♥
+
+12. 现在写的方法都是以一维集合为数据源，不以单个基础值为单位♥♥♥♥
+
+
+15. 用多态消灭条件语句（如果只是if-else的话还是条件或三元吧，多态在多种条件选择的时候才能体现优势）♥♥♥♥
+16. 获取后端的数据要处理下没有值的情况，以免前端报错♥♥♥♥
 
 抽象是哲学的根本特点，代码亦如此。
 （理念和实体）（共相和殊相）（抽象和具象）（现象和本质）（形式和内容）
-
-1. 抽象是什么？
-    抽象是具象的反义词
-2. 为什么要抽象？
-    因为让别人看的一脸懵笔的感觉很爽。
-    因为抽象是我们创建实体的起点，必经之路，我们不能直接从tab切换的业务代码变成另一个拖拽排序的东西，我们只有从中抽象出数据类型，语法，等等，重新构建另一个，这就是从实体到抽象，然后再从抽象到实体的这么一个过程，所以是必经之路，而复用只是抽象附带的这么一个特性而已。
-3. 怎么抽象？
-    单个抽象：抽象行为，抽象属性，抽象种属概念（比较难）
-    多个抽象：抽象相同的部分和不同的部分，抽象不变的和变化的（比上面容易，因为有比较了）
-4. 抽象出什么来？
-    抽象出形式，抽象出质料，任何事物都是形式和质料的统一
-5. 抽象的程度
-    抽象的程度越深，那抽象出来的离抽象本身最近，越一般，与其他抽象越紧密，如果2个抽象依旧没有关系，就说明抽象的程度没有达到联系的那一层，需继续抽象
-*/
-
-// 我现在用高阶函数只是存一些数据,状态,配置一些属性,还没有提升到进去一个函数出来另一个函数的能力
-
-
-/*
-----关于页面----
-
-♥♥♥♥状态♥♥♥♥
-初始状态，修改状态，删除状态，添加状态，重置状态，当前状态
-
-（在抽象弹窗抽象出通知的时候，我一度很困惑，这个概念总感觉是相当的具象，因为他限于人，并非动植物，或是无生命体，有局限性，所以具象，所以还不够通用，不够一般，那就再往上抽，把他的属差去掉，他的属差是什么，是人，是有理性，是主观主动性，然后想了想，“发出信息”就出来了，这就不限客观载体了，生命体能发出信息，非生命体也能发出信息，这样就是更加一般形式了）
-
-♥♥♥♥数据♥♥♥♥
-
-♥♥♥♥可读函数♥♥♥♥
-还有就是有些判断和对象的赋值操作乍看之下看不出逻辑是什么意思，要联系上下文才看的懂，所以最好封装成有名字的函数运行，读起来会好很多
-
-♥♥♥♥ajax统一处理下♥♥♥♥
-
-♥♥♥♥处理业务逻辑和处理数据分开♥♥♥♥
-主体业务逻辑不包含处理数据的部分，我的意思是那些是给人看的代码，和给计算机的代码分开，这样我就能专注业务逻辑了，不会一会写着业务逻辑，一遍处理数据
-
-*/
-
-// 运动，静止
-// 我是这样理解偏函数的，当我抽象出某个事物的种的时候我会去用偏函数，当我要记录某些状态变化的时候我会去用偏函数，也就是要分1步以上的我回去用偏函数，如果不是种，而只是某个函数的中一小部分功能的时候，即使这个功能很复用，我也会去写个小函数，在某个函数里面调用，而不会把他作为种在直接在外面调用
-
-/* 
-★★★★★★★★★★★★★★★★★★★★
-1. 我先不要太烦恼和纠结于寻找那个最大种同时让这个最大的种与我现在写的东西的种之间建立关系等级，因为这是终极目标，不可能一下子找到和建立联系的，那么我现在要掉转枪头，把切入点放在我已有的方法上，从我具体的方法出发，往上找他的形式，往下找他的质料，达到统一，辩证。也就是要训练思维，不能不找边际的乱想
-2. 知识的立足点，是那个一般的东西
-★★★★★★★★★★★★★★★★★★★★
-*/
-
 
 
 /****************
@@ -120,42 +67,31 @@ var factoryClone = factory(function (original, output) {
 var factoryNew = factory();
 
 /*
-    对象统一转换
+    集合统一转换
 */
 
-var objectTransformation =  function (original, output) {
-    return Array.isArray(original) ? objectToArr(output) : arrToObject(output);
+var objectTransformation =  function (original, output, isArrayShift) {
+    return Array.isArray(original) ? transformation(output, [], isArrayShift) : transformation(output, {});
 }
 
 /*
-    对象变数组
+    对象数组转换
 */
 
-var objectToArr = function (object) {
-    var result = [];
-    _.forEach(object, function (currentValue, key, collection) {
-        result.push(currentValue);
+var transformation = function (collection, dataType, isArrayShift) {
+    // 这里是把对象数组统一了，但还是有个小问题[empty,'1']，会有这种情况
+    _.forEach(collection, function (currentValue, key, collection) {
+        isArrayShift === true ? dataType.push(currentValue) : dataType[key] = currentValue;
     });
-    return result;
-};
-
-/*
-    数组变对象
-*/
-
-var arrToObject = function (array) {
-    var result = {};
-    _.forEach(array, function (currentValue, key, collection) {
-        result[key] = currentValue;
-    });
-    return result;
+    return dataType;
 };
 
 /*
     递归
 */
 
-var recursive = function (collection, baseCallback, ObjectCallback) {
+var recursive = function (collection, baseCallback, ObjectCallback, level) {
+    level = _.isNumber(level) ? ++level : 1;
     baseCallback = processFunction(baseCallback);
     ObjectCallback = processFunction(ObjectCallback);
     var result = {
@@ -165,14 +101,14 @@ var recursive = function (collection, baseCallback, ObjectCallback) {
     _.forEach(collection, function (currentValue, key, collection) {
         if (Array.isArray(currentValue) || _.isObject(currentValue)) {
             // 对象值的时候一个断点回调
-            var output = ObjectCallback(currentValue, key, collection);
+            var output = ObjectCallback(currentValue, key, collection, level);
             output && result.collection.push(output);
-            var recursiveValue = recursive(currentValue, baseCallback, ObjectCallback);
+            var recursiveValue = recursive(currentValue, baseCallback, ObjectCallback, level);
             result.value = result.value.concat(recursiveValue.value);
             result.collection = result.collection.concat(recursiveValue.collection);
         } else {
             // 基础值的时候一个断点回调
-            result.value.push(baseCallback(currentValue, key, collection));
+            result.value.push(baseCallback(currentValue, key, collection, level));
         }
     });
     return result;
@@ -350,73 +286,6 @@ var linkOperation = (function () {
     return link;
 })();
 
-/*
-    集合
-*/
-
-var aggregate = function (index, bl) {
-    return function (obj) {
-        var that = this;
-        var thatArg = arguments;
-        return _.whichData(obj, function () {
-            // 并集
-            var union = [].concat.apply(obj, [].slice.call(thatArg, 1));
-            // 并集 交集
-            var result = [union, this.uniq(union)];
-            // 并集删除交集就是补集
-            result[2] = (function () {
-                var complement = union.slice(0);
-                result[1].forEach(function (item, index, arr) {
-                    that.without(complement, item);
-                });
-                return complement;
-            })();
-            return result[index];
-        }.bind(this), function () {
-            // 哪个为主体的开关
-            // 并集
-            var result = [function () {
-                // 手动clone，自调用会栈溢出，呵呵
-                var newObj = {};
-                for (let key in obj) newObj[key] = obj[key];
-                // var newObj = that.clone(obj);
-                for (let i = 1, len = thatArg.length; i < len; i++) {
-                    for (let key in thatArg[i]) {
-                        if (that.isBoolean(bl) && bl) {
-                            if (!newObj.hasOwnProperty(key)) newObj[key] = thatArg[i][key];
-                        } else newObj[key] = thatArg[i][key];
-                    }
-                }
-                return newObj;
-            // 交集
-            }, function () {
-                var newObj = {};
-                for (let i = 1, len = thatArg.length; i < len; i++) {
-                    for (let key in thatArg[i]) {
-                        if (that.isExistence(obj, thatArg[i][key])) {
-                            newObj[key] = thatArg[i][key];
-                        }
-                    }
-                }
-                return newObj;
-            }];
-            // 补集
-            result[2] = function () {
-                // 并集
-                var union = result[0]();
-                // 交集
-                var intersection = result[1]();
-                // 并集删除交集就是补集
-                for (let key in intersection) {
-                    that.without(union, intersection[key]);
-                }
-                return union;
-            };
-            return result[index]();
-        });
-    };
-};
-
 
 
 window._ = {};
@@ -428,6 +297,10 @@ window._ = {};
 /****************
     柯理化-部分应用
 ****************/
+
+/*
+    左柯理
+*/
 
 _.partial = restArgs(function(func, boundArgs) {
     return function() {
@@ -445,21 +318,24 @@ _.partial = restArgs(function(func, boundArgs) {
     复制
 ****************/
 
+var clone = function (original) {
+    return objectTransformation(original, factoryClone(original));
+};
+
 _.clone = function (original,  isDeep) {
     original = processCollection(original);
-    return isDeep !== true ? objectTransformation(original, factoryNew(original, function (value, key, output) {
-            output[key] = value;
-        })) : JSON.parse(JSON.stringify(original));
+    return isDeep !== true ? clone(original) : JSON.parse(JSON.stringify(original));
 };
 
 /****************
     迭代
+    迭代，过滤的深度操作没有意思，应为集合也是值，如果判断是集合就深入，那他本身是不能处理的，所以不可取
 ****************/
 
 _.forEach = function (collection, iterator) {
     collection = processCollection(collection);
     iterator = processFunction(iterator);
-    Object.keys(collection).forEach(function (currentValue, index, array) {
+    Object.keys(collection).forEach(function (currentValue, key, array) {
         iterator(collection[currentValue], currentValue, collection);
     });
 };
@@ -470,26 +346,39 @@ _.forEach = function (collection, iterator) {
 
 /*
     过滤一些特定条件后的数据
+    开始想过滤也加深度，后来发现不靠谱，因为他是根据谓词函数来控制的，控制权在用户手里，用户可以操作集合并非一定要基础类型的值，所以我去通过递归循环过滤没有意义，集合本来就是个值，可以被过滤掉的
 */
 
 _.filter = function (original, predicate) {
     predicate = processFunction(predicate);
-    return objectTransformation(original, factoryNew(original, function (value, key, output) {
-        if (predicate(value, key, output)) output[key] = value;
-    }));
+    return objectTransformation(original, factoryNew(original, function (currentValue, key, output) {
+        if (predicate(currentValue, key, output)) output[key] = currentValue;
+    }), true);
 };
 
 /*
-    过滤出所有对象的值
+    过滤假值
+*/
+
+_.filterFalse = function (collection) {
+    return _.filter(collection, function (currentValue, key, collection) {
+        return !!currentValue;
+    });
+};
+
+/*
+    过滤出所有集合的基础类型值
 */
 
 var value = function (original) {
     return factoryNew(original, function (value, key, output) {
-        output.push(value);
+        Array.isArray(value) || _.isObject(value) ? _.forEach(value, function (currentValue, key, collection) {
+            output.push(currentValue);
+        }) : output.push(value);
     }, []);
 };
 _.value = function (collection, isDeep) {
-    return isDeep !== true ? value(collection) : recursive(collection, function (value, key, collection) {
+    return isDeep !== true ? value(collection) : recursive(collection, function (value, key, collection, level) {
             return value;
         }).value;
 };
@@ -499,16 +388,18 @@ _.value = function (collection, isDeep) {
 */
 
 _.findKey = function (original, value) {
-    for (var key in original) if (original[key] == value) return key;
+    var invert = _.invert(original);
+    return value in invert && invert[value];
 };
 
 /*
-    通过值寻找所在的对象
+    通过值寻找所在的集合
+    这里本来想深度复制集合后操作的但是我想只是寻找像做原始的迭代一样，我并没有去改变原集合，所以想想占时想作罢吧
 */
 
 var findCollection = function (collection, value) {
     var keyResult = Object.keys(collection).indexOf(String(value.key)) > -1 && collection;
-    var valueResult = _.value(collection).indexOf(value.value || value) > -1 && collection;
+    var valueResult = transformation(collection, [], true).indexOf(value.value || value) > -1 && collection;
     if (_.isObject(value)) {
         return Object.keys(value).length === 2 ? keyResult && valueResult && collection[value.key] === value.value && collection : keyResult || valueResult;
     } else return valueResult;
@@ -516,16 +407,12 @@ var findCollection = function (collection, value) {
 _.findCollection = function (collection, value, callback, isDeep) {
     isDeep = _.isBoolean(callback) ? callback : isDeep;
     callback = processFunction(callback);
-    if (isDeep !== true) {
-        var result = [];
-        _.forEach(collection, function (currentValue, key, collection) {
-            var output = findCollection(currentValue, value) && callback(currentValue, key, collection) && currentValue;
-            output && result.push(output);
-        });
-        return result;
-    } else return recursive(collection, null, function (currentValue, key, collection) {
-        return findCollection(currentValue, value) && callback(currentValue, key, collection) && currentValue;
-    }).collection;
+    var result = [];
+    var output = findCollection(collection, value);
+    output && result.push(output);
+    return isDeep !== true ? result : result.concat(recursive(collection, null, function (currentValue, key, collection, level) {
+        return findCollection(currentValue, value) && callback(currentValue, key, collection, level) && currentValue;
+    }).collection);
 };
 
 /****************
@@ -536,9 +423,7 @@ _.debounce = function (func, wait) {
     func = processFunction(func);
     var lock = true;
     return function () {
-        if (!lock) {
-            return;
-        } else {
+        if (!lock) return; else {
             lock = false;
             var timer = setTimeout(function () {
                 lock = true;
@@ -557,27 +442,396 @@ _.debounce = function (func, wait) {
     对象通过一张映射表来映射
     值与值之间的映射
     这里也要处理下是深映射还是浅映射--那我把深浅的概念提出来吧
+    再加个暴力的参数一种是在原有的对象上加映射完的属性，另一种是我直接把原来的干掉
+    那这里就又是二维的概念了，一个是映射key还是映射value，另一个是保留原来的还是干掉原来的
 */
 
-var mappingValue = function (original, form, tag) {
-    tag = tag || '_';
+var mapping = function (original, form, tag, type, isDestroy) {
+    tag = isDestroy ? '' : tag || '_';
+    var typeList = {
+        key : function (value, key, output, form) {
+            output[tag + form[key]] = value;
+            isDestroy && delete output[key];
+        },
+        value : function (value, key, output, form) {
+            // 映射值的时候有个小问题，当当前的值是个集合，不是单值的时候，是找不到映射表里面的值的，例如映射表是['a']，迭代的当前值是[1, 2]，那么去找映射的值的时候会是这样['a'][1, 2]，这显然是个undefined，所以要处理下值是集合的情况
+            if (typeof(value) === 'object' || _.isFunction(value)) return;
+            output[tag + key] = form[key][value];
+        }
+    };
     // 通过表的key找到obj的key后的值对应表的key的值
     return objectTransformation(original, factoryClone(original, function (value, key, output) {
         // 我觉得还是要保留原来的值，不然其他地方用到就蛋疼了
-        if (key in form) {
-            output[tag + key] = form[key][value];
-        }
+        if (key in form) typeList[type](value, key, output, form);
     }));
 };
-_.mappingValue = function (collection, form, tag, isDeep) {
-    isDeep = _.isBoolean(tag) ? tag : isDeep;
+
+/*
+    映射value
+*/
+
+_.mappingValue = function (collection, form, tag, isDeep, isDestroy) {
+    var param = [tag, isDeep, isDestroy].filter(function (currentValue, index, array) {
+        return currentValue === true || currentValue === false;
+    });
+    if (param.length == 2) {
+        isDeep = param[0];
+        isDestroy = param[1];
+    }
+    if (param.length == 1) {
+        isDeep = param[0];
+        isDestroy = false;
+    }
     tag = _.isBoolean(tag) ? undefined : tag;
-    if (isDeep !== true) return mappingValue.apply(null, arguments); else {
-        recursive(collection, null, function (value, key, collection) {
-            collection[key] = mappingValue(value, form, tag);
+    var OneMappingValue = mapping(collection, form, tag, 'value', isDestroy);
+    if (isDeep !== true) return OneMappingValue; else {
+        recursive(OneMappingValue, null, function (value, key, collection, level) {
+            collection[key] = mapping(value, form, tag, 'value', isDestroy);
         });
     }
-    return collection;
+    return OneMappingValue;
+};
+
+/*
+    映射key
+*/
+
+_.mappingKey = function (collection, form, tag, isDeep, isDestroy) {
+    var param = [tag, isDeep, isDestroy].filter(function (currentValue, index, array) {
+        return currentValue === true || currentValue === false;
+    });
+    if (param.length == 2) {
+        isDeep = param[0];
+        isDestroy = param[1];
+    }
+    if (param.length == 1) {
+        isDeep = param[0];
+        isDestroy = false;
+    }
+    tag = _.isBoolean(tag) ? undefined : tag;
+    var OneMappingKey = mapping(collection, form, tag, 'key', isDestroy);
+    if (isDeep !== true) return OneMappingKey; else {
+        recursive(OneMappingKey, null, function (value, key, collection, level) {
+            collection[key] = mapping(value, form, tag, 'key', isDestroy);
+        });
+    }
+    return OneMappingKey;
+}
+
+/*
+    辩证法-你是我，我是你
+    键值互换
+*/
+
+_.invert = function (original, array) {
+    // array是指那些不需要互换的，并不是所有情况都要互换
+    function surplus (key) {
+        return array.every(function (currentValue, index, array) {
+            return currentValue == key;
+        });
+    }
+    surplus = array ? surplus : function () {};
+    return factoryNew(original, function (currentValue, key, output) {
+        surplus(key) ? output[key] = currentValue : output[currentValue] = key;
+    });
+};
+
+/****************
+    去重
+****************/
+
+_.uniq = function (array) {
+    array = processArray(array);
+    return transformation(factoryNew(array, function (currentValue, index, output) {
+        output[currentValue] = currentValue;
+    }), [], true);
+};
+
+/****************
+    打乱顺序
+****************/
+
+_.shuffle = function(original) {
+    original = processArray(original);
+    return factoryNew(original, function (currentValue, index, output) {
+        var random = _.randomNumber(0, index);
+        if (random !== index) output[index] = output[random];
+        output[random] = currentValue;
+    }, []);
+};
+
+/****************
+    分组
+****************/
+
+_.chunk = function (collection, size) {
+    collection = processCollection(collection);
+    var length = Math.ceil(collection.length / size);
+    var result = [];
+    var index = 0;
+    while (index++ < length) result.push(collection.splice(0, size));
+    return result;
+};
+
+/****************
+    集合--并集，交集，补集，
+****************/
+
+/*
+    不管多少个求交集，补集，都是2个之间集合的比较
+*/
+
+var perGenusEtDifferentiam = function (aCollection, bCollection) {
+    var equally = [];
+    var difference = [];
+    // 首先自己要去重，不然就bug了
+    var allCollection = _.value([_.uniq(aCollection), _.uniq(bCollection)]);
+    _.forEach(allCollection, function (currentValue, key, array) {
+        var result = [];
+        var index = array.indexOf(currentValue);
+        while (index != -1) {
+          result.push(index);
+          index = array.indexOf(currentValue, index + 1);
+        }
+        result.length === 2 && equally.push(currentValue);
+        result.length === 1 && difference.push(currentValue);
+    });
+    return {
+        equally : _.uniq(equally),
+        difference : difference
+    };
+};
+
+/*
+    并集
+*/
+
+_.union = function () {
+    return _.uniq(_.value([].slice.call(arguments)));
+};
+
+/*
+    交集
+*/
+
+_.intersection = function () {
+    if (arguments.length < 2) return [];
+    var result = factoryNew(_.chunk([].slice.call(arguments), 2), function (currentValue, key, output) {
+        if (currentValue.length === 1) output.push(currentValue[0]); else output.push(perGenusEtDifferentiam(currentValue[0], currentValue[1]).equally);
+    }, []);
+    if (result.length >= 2) result = _.intersection.apply(null, result);
+    return _.value(result);
+};
+
+/*
+    补集
+*/
+
+_.complement = function () {
+    var result = factoryNew(_.chunk([].slice.call(arguments), 2), function (currentValue, key, output) {
+        if (currentValue.length === 1) output.push(currentValue[0]); else output.push(perGenusEtDifferentiam(currentValue[0], currentValue[1]).difference);
+    }, []);
+    if (result.length >= 2) result = _.intersection.apply(null, result);
+    return _.value(result);
+};
+
+/****************
+    形式转换
+****************/
+
+/*
+    把一个集合转换为一个[key, value]形式的数组
+*/
+
+_.pairs = function (original) {
+    return factoryNew(original, function (currentValue, key, output) {
+        output.push([key, currentValue]);
+    }, []);
+};
+
+/****************
+    删除
+****************/
+
+var removeSomething = function(collection, deleteCollection, type) {
+    var isArrayShift = type === 'key' ? false : true;
+    var result = objectTransformation(collection, factoryNew(collection, function (currentValue, key, output) {
+        if (type === 'value' && !_.isExistence(deleteCollection, [currentValue])) output[key] = currentValue;
+        if (type === 'key' && !_.isExistence(deleteCollection.join().split(','), [key])) output[key] = currentValue
+    }), isArrayShift);
+    return result;
+};
+
+/*
+    删除vlaue
+*/
+
+_.removeValue = function (collection, deleteCollection, isDeep) {
+    var oneRemoveValue = removeSomething(collection, deleteCollection, 'value');
+    if (isDeep !== true) return oneRemoveValue; else {
+        recursive(oneRemoveValue, null, function (currentValue, key, collection, level) {
+            collection[key] = removeSomething(currentValue, deleteCollection, 'value');
+        });
+        return oneRemoveValue;
+    }
+};
+
+/*
+    删除key
+*/
+
+_.removeKey = function (collection, deleteCollection, isDeep) {
+    var oneRemoveKey = removeSomething(collection, deleteCollection, 'key');
+    if (isDeep !== true) return oneRemoveKey; else {
+        recursive(oneRemoveKey, null, function (currentValue, key, collection, level) {
+            collection[key] = removeSomething(currentValue, deleteCollection, 'key');
+        });
+        return oneRemoveKey;
+    }
+};
+
+/*
+    删除空格
+*/
+
+var trim = function (collection) {
+    return objectTransformation(collection, factoryClone(collection, function (currentValue, key, output) {
+        if (_.isString(currentValue)) output[key] = currentValue.replace(/(^\s*)|(\s*$)/g,'');
+    }));
+};
+
+_.trim = function(collection, isDeep) {
+    var oneTrim = trim(collection);
+    if (isDeep !== true) return oneTrim; else {
+        recursive(oneTrim, function (currentValue, key, collection, level) {
+            if (_.isString(currentValue)) collection[key] = currentValue.replace(/(^\s*)|(\s*$)/g,'');
+        });
+    }
+    return oneTrim;
+};
+
+/****************
+    数字
+    我从倒计时，日期，数字的分隔中抽象出数字，也就是抽象出了质料，我又从倒计时，数字的分隔中中抽象出了时间，金钱，也就抽象出了形式，这是数字赋予形式后的2的意思
+****************/
+
+/*
+    补零
+*/
+
+_.fillZero = function (value) {
+    return value < 10 ? '0' + value : String(value);
+};
+
+/*
+    把字符串数字变成数字
+*/
+
+var toNumber = function (original) {
+    return objectTransformation(original, factoryClone(original, function (currentValue, key, output) {
+        var value = _.isString(currentValue) && Number(currentValue);
+        if(_.isNumber(value)) output[key] = value;
+    }));
+};
+
+_.toNumber = function (original, isDeep) {
+    var oneToNumber = toNumber(original);
+    if(isDeep !== true) return oneToNumber; else {
+        recursive(oneToNumber, null, function (currentValue, key, collection, level) {
+            collection[key] = toNumber(currentValue);
+        });
+        return oneToNumber;
+    }
+};
+
+/****************
+    金钱
+****************/
+
+/*
+    数字3位加逗号，金钱显示
+*/
+
+_.money = function (value) {
+    return String(value).split('').reverse().join('').replace(/(\d{3})/g, '$1,').split('').reverse().join('').replace(/^\,/,'');
+};
+
+/****************
+    获取集合的某个值
+    目的是为了，不管访问层级都做到兼容不报错
+****************/
+
+_.getValue = function (collection, node) {
+    node = String(node).split('.');
+    var result = '';
+    var levelCollection = collection;
+    _.forEach(node, function (currentValue, index, array) {
+        if (typeof levelCollection === 'object' && currentValue in levelCollection) result = levelCollection[currentValue]; else result = '';
+        levelCollection = _.isObject(levelCollection) ? '' : levelCollection[currentValue];
+    });
+    return result;
+};
+
+/****************
+    组合对象集合
+****************/
+
+var assign = function (original, basics) {
+    original = _.clone(processCollection(original), true);
+    // 处理引用值的键
+    var citeKey = [];
+    recursive(basics, function (currentValue, key, collection, level) {
+        citeKey.push(key);
+    }, function (currentValue, key, collection, level) {
+        citeKey.push(key);
+    });
+    var basicsCollection = factoryNew(citeKey, function (currentValue, key, output) {
+        var parent;
+        var parentLevel;
+        var result = _.findCollection(basics, {
+            key : currentValue
+        }, function (currentValue, key, collection, level) {
+            parent = key;
+            parentLevel = level;
+            return true;
+        }, true);
+        result.length && output.push({
+            parent : parent,
+            parentLevel : parentLevel ? parentLevel : 0,
+            value : result[0]
+        });
+    }, []);
+    // 处理基础值的键
+    var basicsObject = _.filter(basics, function (currentValue, key, collection) {
+        var isCite = _.isObject(currentValue) || Array.isArray(currentValue);
+        return !isCite || isCite && !Object.keys(currentValue).length;
+    });
+    _.forEach(basicsCollection.sort(function (a, b) {
+        return b.parentLevel - a.parentLevel;
+    }), function (currentValue, key, collection, level) {
+        // 这是存在属性合并的情况
+        recursive(original, null, function (current, bolt, object, grade) {
+            if (grade === currentValue.parentLevel && currentValue.parent in object && bolt === currentValue.parent) {
+                object[bolt] = Object.assign(current, currentValue.value);
+                // 更新原始值
+                var result = _.findCollection(basics, {
+                    key : currentValue.parent
+                }, true);
+                if (result.length) result[0][currentValue.parent] = object[bolt];
+            }
+        });
+        // 第一层不存在属性要添加的情况
+        if (currentValue.parentLevel === 1 && !(currentValue.parent in original)) original[currentValue.parent] = currentValue.value;
+    });
+    return Object.assign(original, basicsObject);
+};
+
+_.assign = function () {
+    var result = factoryNew(_.chunk([].slice.call(arguments), 2), function (currentValue, key, output) {
+        if (currentValue.length === 1) output.push(currentValue[0]); else output.push(assign(currentValue[0], currentValue[1]));
+    },[]);
+    result = result.length >= 2 ? _.assign.apply(null, result) : result[0];
+    return result;
 };
 
 /****************
@@ -810,7 +1064,7 @@ _.isInteger = function (n) {
 */
 
 ['Arguments', 'Function', 'String', 'Date', 'RegExp', 'Object', 'Boolean'].forEach(function (currentValue, index, array) {
-    _['is' + currentValue] = function(obj) {
+    _['is' + currentValue] = function (obj) {
         return Object.prototype.toString.call(obj) === '[object ' + currentValue + ']';
     };
 });
@@ -819,7 +1073,7 @@ _.isInteger = function (n) {
     判断2个对象是否相等
 */
 
-_.isEqual = function(a, b, aStack, bStack) {
+_.isEqual = function (a, b, aStack, bStack) {
     if (!aStack || !bStack) if (!_.isObject(a) && !Array.isArray(a) || !_.isObject(b) && !Array.isArray(b)) return false;
     var c1 = Object.prototype.toString.call(a);
     // 类型不同直接out
@@ -911,7 +1165,41 @@ _.negate = function (predicate) {
     };
 };
 
+/****************
+    时间
+****************/
 
+/*
+    获取某个月份的天数
+*/
+
+_.getDays = function (year, month) {
+    return new Date(year, month, 0).getDate();
+};
+
+/*
+    时间格式化
+*/
+
+_.timeFormat = function (format, date) {
+    var time = _.isNumber(date) ? new Date(date) : new Date();
+    var o = { 
+        'M+' : time.getMonth() + 1,                 //月份 
+        'd+' : time.getDate(),                    //日 
+        'h+' : time.getHours(),                   //小时 
+        'm+' : time.getMinutes(),                 //分 
+        's+' : time.getSeconds(),                 //秒 
+        'q+' : Math.floor((time.getMonth() + 3) / 3), //季度 
+        'S'  : time.getMilliseconds()             //毫秒 
+    }; 
+    if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length)); 
+    for (var k in o) {
+        if (new RegExp('(' + k + ')').test(format)) {
+            format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+        }
+    }
+    return format; 
+}
 
 /*
 ★★★★名词★★★★
@@ -947,7 +1235,7 @@ _.link = function () {
     newLink.head.next = newLink.tail;
     newLink.head.previous = newLink.tail;
     // 继承方法
-    newLink = _.extend(newLink, linkOperation);
+    newLink = Object.assign(newLink, linkOperation);
     // 初始化添加链表元素
     var allLink = [].filter.call(arguments, function (currentValue, index, array) {
         return _.isFunction(currentValue);
@@ -956,347 +1244,6 @@ _.link = function () {
         newLink.add(currentValue);
     });
     return newLink;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    过滤false的值，都返回真值
-*/
-_.compact = function (oldObj) {
-    return objectTransformation(oldObj, factoryClone(oldObj, function (val, key, newObj) {
-        !val && delete newObj[key];
-    }));
-};
-
-
-
-/****************
-    映射
-****************/
-/*
-    映射转换
-    辩证法-你是我，我是你
-    键值互换
-*/
-_.invert = function (oldObj, arr) {
-    // arr是指那些不需要互换的，并不是所有情况都要互换
-    function surplus (it) {
-        return !arr.every(function (item, index, arr) {
-            return item === it ? false : true;
-        });
-    }
-    surplus = arr ? surplus : function () {};
-    return factoryNew(oldObj, function (val, key, newObj) {
-        surplus(key) ? newObj[key] = val : newObj[val] = key;
-    });
-};
-
-
-
-/*
-    映射key
-*/
-_.paraKey = function (obj, form) {
-    return factoryNew(obj, function (val, key, newObj) {
-        // 占时不深映射，深浅之后统一处理
-        for (let x in form) {
-            if (key === form[x]) newObj[x] = val;
-        }
-    });
-}
-
-
-
-/****************
-    形式转换
-****************/
-/*
-    把一个对象转换为一个[key,value]形式的数组
-*/
-_.pairs = function (oldObj) {
-    return objectToArr(factoryNew(oldObj, function (val, key, newArr) {
-        newArr.push([key, val]);
-    }, []));
-};
-
-
-
-/****************
-    数据去重
-****************/
-_.uniq = function (array) {
-    var result = [];
-    var repeat = [];
-    for(var i = 0; i < array.length; i++){
-        var value = array[i];
-        if(!_.isExistence(result, value)) result.push(value); else {
-            i--;
-            _.without(array, value);
-            if (!_.isExistence(repeat, value)) repeat.push(value);
-        }
-    }
-    return repeat;
-};
-
-/****************
-    数据包裹
-****************/
-_.wrap = function (oldObj, addObj) {
-    return factoryClone(oldObj, function (val, key, newObj) {
-        newObj[key] = _.extend({
-            value : val,
-        }, addObj[key]);
-    });
-}
-
-/****************
-    解除包裹
-****************/
-_.wrapBack = function (oldObj) {
-    return factoryClone(oldObj, function (val, key, newObj) {
-        newObj[key] = val.value;
-    });
-};
-
-/****************
-    打乱顺序
-****************/
-_.shuffle = function(obj) {
-    var length = obj.length;
-    var shuffled = Array(length);
-    for (var index = 0, rand; index < length; index++) {
-        rand = _.randomNumber(0, index);
-        if (rand !== index) shuffled[index] = shuffled[rand];
-        shuffled[rand] = obj[index];
-    }
-    return shuffled;
-};
-
-
-
-/****************
-    删除
-****************/
-/*
-    删除元素
-*/
-_.without = function(oldObj, del) {
-    return objectTransformation(oldObj, factoryClone(oldObj, function (val, key, newObj) {
-        val === del && delete newObj[key];
-    }));
-};
-/*
-    删除空格
-*/
-_.trim = function(oldObj) {
-    var newObj = _.clone(oldObj);
-    for (var key in newObj) {
-        if (newObj[key] == null || newObj[key] == undefined) {
-            newObj[key] = '';
-        } else if (typeof newObj[key] == 'object') {
-            _.trim(newObj[key]);
-        } else {
-            newObj[key] = newObj[key].toString().replace(/(^\s*)|(\s*$)/g,'');
-        }
-    }
-    return newObj;
-};
-
-
-/****************
-    集合--并集，交集，补集
-****************/
-/*
-    并集
-*/
-_.union = aggregate(0);
-/*
-    交集
-*/
-_.intersection = aggregate(1);
-/*
-    补集
-*/
-_.complement = aggregate(2);
-/*
-    继承
-*/
-_.extend = aggregate(0, true);
-
-
-
-/****************
-    时间
-****************/
-/*
-    获取某个月份的天数
-*/
-_.getDays = function(year, month) {
-    return new Date(year, month, 0).getDate();
-};
-/*
-    返回某一时间段日期信息
-*/
-_.date = function(time) {
-    var n = n ? new Date(time) : new Date();
-    return [n.getFullYear(), fillZero(n.getMonth() + 1), fillZero(n.getDate()), fillZero(n.getHours()), fillZero(n.getMinutes()), fillZero(n.getSeconds())];
-};
-/*
-    变成这种格式2017-08-20 11:09:25
-*/
-_.getTime = function (stamp) {
-    var time = this.date(stamp);
-    return time[0] + '-' + time[1] + '-' + time[2] + ' ' + time[3] + ':' + time[4] + ':' +  time[5];
-};
-/*
-    倒计时
-*/
-_.countDown = function(c, fn) {
-    // 有这么计划总情况需要处理
-    // 1.传的是日期 2107-12-24 14:11:00
-    // 2.传的是时间戳 1510012800000
-    if (/-/g.test(c)) c = (new Date(c)).getTime();
-    upDate(c, fn);
-    var timer = setInterval(function() {
-        if (!upDate(c, fn)) clearInterval(timer);
-    },1000);
-    function upDate(c, fn){
-        var d = new Date();
-        //获取当前时间戳
-        var nowTime = d.getTime();
-        var overTime = c;
-        //结束事件戳-当前时间戳 
-        var mist = parseInt((overTime - nowTime) / 1000);
-        var date = parseInt(mist / 86400);
-        //去天后的秒数
-        mist = mist % 86400    
-        var hours = parseInt(mist / 3600);
-        //去小时后的秒数
-        mist = mist % 3600;
-        var minutes = parseInt(mist / 60);
-        mist = mist % 60;
-        fn && fn(date, hours, minutes, mist);
-        return date + hours + minutes + mist;
-    }
-};
-
-
-
-/****************
-    空间
-****************/
-
-
-
-/****************
-    数字
-    我从倒计时，日期，数字的分隔中抽象出数字，也就是抽象出了质料，我又从倒计时，数字的分隔中中抽象出了时间，金钱，也就抽象出了形式，这是实体抽象的2的方向，那实体之外的抽象，我该怎么分类呢？
-****************/
-_.fillZero = function (nub) {
-    return nub < 10 ? '0' + nub : nub;
-};
-
-
-
-/****************
-    金钱
-****************/
-// 数字3位加逗号，金钱显示
-_.money = function(num) {
-    num += '';
-    return num.split('').reverse().join('').replace(/(\d{3})/g, '$1,').split('').reverse().join('').replace(/^\,/,'');
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*未完成*/
-/*
-    重复行为
-    重复做直到达到目标，不达目的誓不罢休
-    但这里只是重复特定的值，万一我是要做其他更具体的事情呢？？？？其他情况最终还是转化为一个值
-*/
-_.repeat = function (iterator, predicate, array) {
-    array = array ? [] : array;
-    // 创建一个新值
-    var res = iterator();
-    // 判断这个新值在某个条件中符合不符合
-    // 如果符合就添加到数据中
-    // 如果不符合接着递归直到符合
-    if (predicate(array, res)) {
-        // 达到目的停止
-        array.push(res);
-        return res;
-    // 没达到目的继续
-    } else _.repeat(iterator, predicate, array);
-};
-/*
-    根据不同的数据类型做不同的事情
-    以后这种东西都要变成策略
-*/
-_.whichData = function (data, arr, obj) {
-    if (_.isObject(data)) return obj(data);
-    if (Array.isArray(data)) return arr(data);
-};
-/*
-    第三者
-    发现很多模式都是通过第三者甚至第n者来进行对象与对象之间的访问的，比如中介者，代理
-    未完成。。。。。。
-*/
-_.third = function () {
-
-};
-/*
-    策略
-    访问对象的属性(数字-字符)
-    未完成。。。。。。
-*/
-_.strategy = function (road) {
-
-};
-/*
-    js特性的终极目标--动态变化
-    未完成。。。。。。
-*/
-_.change = function () {
-    // ...
-    return function () {
-        // ...
-    };
 };
 
 

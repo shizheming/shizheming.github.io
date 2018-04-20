@@ -77,9 +77,9 @@
             <li><a href="#decorate">_.decorate</a></li>
         </ul>
         <h3>状态</h3>
-        <ul>
+        <!-- <ul>
             <li><a href="#state">_.state</a></li>
-        </ul>
+        </ul> -->
         <h3>金钱</h3>
         <ul>
             <li><a href="#money">_.money</a></li>
@@ -105,6 +105,11 @@
             <li><a href="#isExistence">_.isExistence</a></li>
             <li><a href="#isEqual">_.isEqual</a></li>
             <li><a href="#negate">_.negate</a></li>
+        </ul>
+        <h3>时间</h3>
+        <ul>
+            <li><a href="#getDays">_.getDays</a></li>
+            <li><a href="#timeFormat">_.timeFormat</a></li>
         </ul>
         <h2>实体</h2>
         <h3>迭代器</h3>

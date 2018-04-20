@@ -1,7 +1,6 @@
 <template>
     <div class="ssss">
-        <!-- 隐德莱希 -->
-        <div class="name">tobe</div>
+        <div class="name">隐德莱希</div>
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
@@ -237,7 +236,7 @@
                     <h5>ps</h5>
                     <div>下面的例子只合并了2个集合，可以多个集合</div>
                 </div>
-                <!-- <assign></assign> -->
+                <assign></assign>
             </div>
             <div id="removeValue">
                 <h4>_.removeValue(collection, deleteCollection, [isDeep = false])</h4>
@@ -391,7 +390,7 @@
                 </div>
                 <decorate></decorate>
             </div>
-            <div id="state">
+            <!-- <div id="state">
                 <h4>_.state([state...])</h4>
                 <div class="describe">
                     <p>把各种状态按顺序执行</p>
@@ -434,7 +433,7 @@
                     <div><em>（all type data）</em>：返回当前执行状态函数的返回值</div>
                 </div>
                 <state></state>
-            </div>
+            </div> -->
             <div id="randomNumber">
                 <h4>_.randomNumber([digit = 1], [digit2])</h4>
                 <div class="describe">
@@ -633,6 +632,30 @@
                 </div>
                 <negate></negate>
             </div>
+            <div id="getDays">
+                <h4>_.getDays(year, month)</h4>
+                <div class="describe">
+                    <p>获取月份天数</p>
+                    <h5>参数</h5>
+                    <div>year<em>（Nubmer）</em>：需要年份</div>
+                    <div>month<em>（Nubmer）</em>：需要月份</div>
+                    <h5>返回值</h5>
+                    <div><em>（Number）</em>：返回天数</div>
+                </div>
+                <getDays></getDays>
+            </div>
+            <div id="timeFormat">
+                <h4>_.timeFormat(format, [date = new Date()])</h4>
+                <div class="describe">
+                    <p>格式化时间</p>
+                    <h5>参数</h5>
+                    <div>format<em>（String）</em>：需要的显示格式</div>
+                    <div>[date = new Date()]<em>（和new Date参数一样）</em>：需要的时间</div>
+                    <h5>返回值</h5>
+                    <div><em>（Number）</em>：返回格式化后的时间</div>
+                </div>
+                <timeFormat></timeFormat>
+            </div>
             <div id="identity">
                 <h4>_.identity(value)</h4>
                 <div class="describe">
@@ -746,6 +769,9 @@ import complement from './complement.vue';
 import trim from './trim.vue';
 import fillZero from './fillZero.vue';
 import money from './money.vue';
+import assign from './assign.vue';
+import getDays from './getDays.vue';
+import timeFormat from './timeFormat.vue';
 
 
 
@@ -824,6 +850,9 @@ export default {
         trim,
         fillZero,
         money,
+        assign,
+        getDays,
+        timeFormat,
     },
 }
 </script>
