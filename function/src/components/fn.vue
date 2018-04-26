@@ -1,6 +1,7 @@
 <template>
     <div class="ssss">
-        <div class="name">隐德莱希</div>
+        <!-- <div class="name">隐德莱希</div> -->
+        <div class="name">ToBe</div>
         <sidebar></sidebar>
         <div class="content">
             <div id="forEach">
