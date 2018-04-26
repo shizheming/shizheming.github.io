@@ -76,7 +76,7 @@
         <ul>
             <li><a href="#decorate">_.decorate</a></li>
         </ul>
-        <h3>状态</h3>
+        <!-- <h3>状态</h3> -->
         <!-- <ul>
             <li><a href="#state">_.state</a></li>
         </ul> -->
